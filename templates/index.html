@@ -1,0 +1,949 @@
+<!doctype html>
+<html lang="da">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>AI ValgChat FV26</title>
+    <meta name="description" content="AI ValgChat FV26 er en eksperimentel AI-chat om dansk politik og folketingsvalget 2026. Sammenlign partier og få en foreløbig matchliste ud fra dine prioriteter.">
+    <meta property="og:type" content="website">
+    <meta property="og:locale" content="da_DK">
+    <meta property="og:title" content="AI ValgChat FV26">
+    <meta property="og:description" content="Eksperimentel AI-chat om dansk politik og folketingsvalget 2026. Sammenlign partier og få en foreløbig matchliste.">
+    <meta property="og:url" content="{{ public_page_url }}">
+    <meta property="og:image" content="{{ social_preview_url }}">
+    <meta property="og:image:secure_url" content="{{ social_preview_url }}">
+    <meta property="og:image:type" content="image/png">
+    <meta property="og:image:width" content="1200">
+    <meta property="og:image:height" content="630">
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:title" content="AI ValgChat FV26">
+    <meta name="twitter:description" content="Eksperimentel AI-chat om dansk politik og folketingsvalget 2026.">
+    <meta name="twitter:image" content="{{ social_preview_url }}">
+    <link rel="icon" type="image/svg+xml" href="{{ url_for('static', filename='DDC-logo-rosa-2.svg') }}">
+    <link rel="stylesheet" href="{{ url_for('static', filename='styles_v2.css') }}">
+
+    <!-- Markdown parser + HTML sanitizer (safe rendering) -->
+    <script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/dompurify@3.0.6/dist/purify.min.js"></script>
+
+    <script>
+      const AUTO_SCROLL_THRESHOLD_PX = 80;
+      const STREAM_FIRST_TOKEN_TIMEOUT_MS = 25000;
+      const STREAM_IDLE_TIMEOUT_MS = 30000;
+      const STARTUP_HINT = `**Sådan bruger du AI-chatbotten** 
+
+Chatbotten er designet til at give råd om hvilke tre partier, som stemmer bedst overens med dine holdninger.
+
+Kan du fortælle mig, hvilke emner du brænder mest for, eller hvilke værdier der er vigtigst for dig i politik? For eksempel: Er klima, økonomi, velfærd, immigration eller noget helt andet vigtigst?`;
+      const BRIEFING_VERSION = "v1";
+      const BRIEFING_KEY = `briefing_ack_${BRIEFING_VERSION}`;
+      const DELETION_CODE_KEY = "deletion_code_v1";
+      const DELETION_CONTACT = "your-contact@example.org";
+
+      // Configure marked (optional but sensible defaults)
+      marked.setOptions({
+        gfm: true,
+        breaks: true
+      });
+
+      function stripUrlsFromText(inputText) {
+        const src = inputText || "";
+        return src
+          .replace(/\[([^\]]+)\]\((https?:\/\/[^)\s]+)\)/g, "$1")
+          .replace(/<https?:\/\/[^>\s]+>/g, "[link removed]")
+          .replace(/https?:\/\/[^\s)\]]+/g, "[link removed]");
+      }
+
+      function renderMarkdownToSafeHtml(mdText) {
+        // Parse markdown -> HTML, then sanitize to prevent XSS
+        const normalized = stripUrlsFromText(mdText);
+        const html = DOMPurify.sanitize(marked.parse(normalized || ""));
+        const wrapper = document.createElement("div");
+        wrapper.innerHTML = html;
+        // Hard safety net: never render clickable links from model output.
+        wrapper.querySelectorAll("a[href]").forEach((a) => {
+          const txt = document.createTextNode(a.textContent || "[link removed]");
+          a.replaceWith(txt);
+        });
+        return wrapper.innerHTML;
+      }
+
+      function nowClock() {
+        return new Date().toLocaleTimeString("da-DK", { hour: "2-digit", minute: "2-digit" });
+      }
+
+      let modelHeartbeatTimer = null;
+      let modelHeartbeatStart = 0;
+      let hasEndedChat = false;
+      const mobileUiState = {
+        hasTyped: false,
+        hasAssistantReply: false
+      };
+
+      function formatElapsed(ms) {
+        const sec = Math.max(0, Math.floor(ms / 1000));
+        const m = Math.floor(sec / 60);
+        const s = sec % 60;
+        return `${String(m).padStart(2, "0")}:${String(s).padStart(2, "0")}`;
+      }
+
+      function setModelStatus(state, text) {
+        const statusEl = document.getElementById("model-status");
+        const textEl = document.getElementById("model-status-text");
+        if (!statusEl || !textEl) return;
+        statusEl.classList.remove("is-idle", "is-working", "is-queued", "is-degraded", "is-error");
+        statusEl.classList.add(`is-${state}`);
+        textEl.textContent = text;
+      }
+
+      function startModelHeartbeat(baseText = "AI-modellen arbejder", state = "working") {
+        if (modelHeartbeatTimer) {
+          clearInterval(modelHeartbeatTimer);
+          modelHeartbeatTimer = null;
+        }
+        modelHeartbeatStart = Date.now();
+        let tick = 0;
+        modelHeartbeatTimer = setInterval(() => {
+          tick += 1;
+          const dots = ".".repeat((tick % 3) + 1);
+          const elapsed = formatElapsed(Date.now() - modelHeartbeatStart);
+          setModelStatus(state, `${baseText}${dots} (${elapsed})`);
+        }, 700);
+      }
+
+      function stopModelHeartbeat() {
+        if (modelHeartbeatTimer) {
+          clearInterval(modelHeartbeatTimer);
+          modelHeartbeatTimer = null;
+        }
+      }
+
+      function isNearBottom(container) {
+        const distance = container.scrollHeight - container.scrollTop - container.clientHeight;
+        return distance < AUTO_SCROLL_THRESHOLD_PX;
+      }
+
+      function scrollToBottom(container) {
+        container.scrollTop = container.scrollHeight;
+      }
+
+      function appendMessage(sender, text, options = {}) {
+        const { forceScroll = false } = options;
+        const conversation = document.getElementById("conversation");
+        const shouldStickToBottom = forceScroll || isNearBottom(conversation);
+
+        const msg = document.createElement("div");
+        msg.classList.add("bubble", sender);
+
+        const label = document.createElement("div");
+        label.classList.add("msg-label");
+        label.textContent = (sender === "user") ? "Mig:" : "AI:";
+
+        const timeEl = document.createElement("span");
+        timeEl.classList.add("msg-time");
+        timeEl.textContent = nowClock();
+        label.appendChild(timeEl);
+
+        const body = document.createElement("div");
+        body.classList.add("msg-text");
+        body.innerHTML = renderMarkdownToSafeHtml(text);
+
+        msg.appendChild(label);
+        msg.appendChild(body);
+
+        conversation.appendChild(msg);
+        if (shouldStickToBottom) {
+          scrollToBottom(conversation);
+        }
+
+        return { bubble: msg, body }; // return both for streaming + feedback controls
+      }
+
+      function createMessageId() {
+        if (window.crypto && crypto.randomUUID) return crypto.randomUUID();
+        return `msg_${Date.now()}_${Math.random().toString(16).slice(2)}`;
+      }
+
+      async function submitFeedback(payload) {
+        try {
+          const r = await fetch("/api/feedback", {
+            method: "POST",
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify(payload)
+          });
+          return r.ok;
+        } catch {
+          return false;
+        }
+      }
+
+      function addFeedbackControls(assistantBubbleEl, prompt, responseText, interactionId = "") {
+        if (!assistantBubbleEl) return;
+        if (assistantBubbleEl.querySelector(".feedback-row")) return;
+
+        const messageId = interactionId || createMessageId();
+        const row = document.createElement("div");
+        row.className = "feedback-row";
+
+        const label = document.createElement("span");
+        label.className = "feedback-label";
+        label.textContent = "Var dette svar hjælpsomt?";
+
+        const upBtn = document.createElement("button");
+        upBtn.type = "button";
+        upBtn.className = "feedback-btn";
+        upBtn.textContent = "👍";
+        upBtn.setAttribute("aria-label", "Godt svar");
+
+        const downBtn = document.createElement("button");
+        downBtn.type = "button";
+        downBtn.className = "feedback-btn";
+        downBtn.textContent = "👎";
+        downBtn.setAttribute("aria-label", "Forkert svar");
+
+        const status = document.createElement("span");
+        status.className = "feedback-status";
+
+        async function onRate(rating) {
+          const ok = await submitFeedback({
+            interaction_id: messageId,
+            rating,
+            prompt,
+            response: responseText || ""
+          });
+          if (ok) {
+            status.textContent = "Tak for feedback";
+            upBtn.disabled = true;
+            downBtn.disabled = true;
+            if (rating === "up") upBtn.classList.add("is-selected");
+            if (rating === "down") downBtn.classList.add("is-selected");
+          } else {
+            status.textContent = "Kunne ikke gemme feedback";
+          }
+        }
+
+        upBtn.addEventListener("click", () => onRate("up"));
+        downBtn.addEventListener("click", () => onRate("down"));
+
+        row.appendChild(label);
+        row.appendChild(upBtn);
+        row.appendChild(downBtn);
+        row.appendChild(status);
+        assistantBubbleEl.appendChild(row);
+      }
+
+      function autoResizePrompt() {
+        const input = document.getElementById("prompt");
+        if (!input) return;
+
+        input.style.height = "auto";
+        const maxHeight = 180;
+        const nextHeight = Math.min(input.scrollHeight, maxHeight);
+        input.style.height = `${nextHeight}px`;
+        input.style.overflowY = input.scrollHeight > maxHeight ? "auto" : "hidden";
+      }
+
+      function setupMobileDisclaimer() {
+        const panel = document.getElementById("disclaimer-panel");
+        const toggle = document.getElementById("disclaimer-toggle");
+        if (!panel || !toggle) return;
+
+        function syncState() {
+          const expanded = panel.classList.contains("is-expanded");
+          toggle.setAttribute("aria-expanded", expanded ? "true" : "false");
+          toggle.textContent = expanded ? "Skjul disclaimer" : "Vis disclaimer";
+        }
+
+        function applyResponsiveDefault() {
+          if (window.matchMedia("(max-width: 980px)").matches) {
+            panel.classList.remove("is-expanded");
+          } else {
+            panel.classList.add("is-expanded");
+          }
+          syncState();
+        }
+
+        toggle.addEventListener("click", () => {
+          panel.classList.toggle("is-expanded");
+          syncState();
+        });
+
+        window.addEventListener("resize", applyResponsiveDefault);
+        applyResponsiveDefault();
+      }
+
+      function updateMobileChatLiveMode() {
+        const isMobile = window.matchMedia("(max-width: 980px)").matches;
+        const active = isMobile && mobileUiState.hasTyped && mobileUiState.hasAssistantReply;
+        document.body.classList.toggle("chat-live-mode", active);
+      }
+
+      function markUserTypingStarted() {
+        if (mobileUiState.hasTyped) return;
+        mobileUiState.hasTyped = true;
+        updateMobileChatLiveMode();
+      }
+
+      function markAssistantReplyReceived() {
+        if (mobileUiState.hasAssistantReply) return;
+        mobileUiState.hasAssistantReply = true;
+        updateMobileChatLiveMode();
+      }
+
+      function safeStorageGet(key) {
+        try {
+          return sessionStorage.getItem(key);
+        } catch {
+          return null;
+        }
+      }
+
+      function safeStorageSet(key, value) {
+        try {
+          sessionStorage.setItem(key, value);
+          return true;
+        } catch {
+          return false;
+        }
+      }
+
+      function safeStorageRemove(key) {
+        try {
+          sessionStorage.removeItem(key);
+          return true;
+        } catch {
+          return false;
+        }
+      }
+
+      function setComposerEnabled(enabled) {
+        const input = document.getElementById("prompt");
+        const submitBtn = document.querySelector("#chat-form button[type='submit']");
+        if (input) input.disabled = !enabled;
+        if (submitBtn) submitBtn.disabled = !enabled;
+      }
+
+      async function postSessionEvent(eventType, payload = {}) {
+        try {
+          const r = await fetch("/api/session_event", {
+            method: "POST",
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify({ event_type: eventType, payload })
+          });
+          if (!r.ok) return null;
+          return await r.json();
+        } catch {
+          return null;
+        }
+      }
+
+      function syncDeletionCodeUi() {
+        const code = safeStorageGet(DELETION_CODE_KEY) || "";
+        const codeEl = document.getElementById("deletion-code-value");
+        const codeInlineEl = document.getElementById("deletion-code-inline-value");
+        const mailEl = document.getElementById("deletion-code-contact");
+        const mailInlineEl = document.getElementById("deletion-code-inline-contact");
+        if (codeEl) codeEl.textContent = code || "Ikke oprettet endnu";
+        if (codeInlineEl) codeInlineEl.textContent = code || "Ikke oprettet endnu";
+        if (mailEl) mailEl.textContent = DELETION_CONTACT;
+        if (mailInlineEl) mailInlineEl.textContent = DELETION_CONTACT;
+      }
+
+      function downloadDeletionCodeTxt() {
+        const code = (safeStorageGet(DELETION_CODE_KEY) || "").trim();
+        const now = new Date().toISOString();
+        const content = [
+          "AI Valgkompas FV26 - Deletion Code",
+          "",
+          `Deletion code: ${code || "NOT_ISSUED_YET"}`,
+          `Contact email: ${DELETION_CONTACT}`,
+          "",
+          "If you want your data deleted later, send this code to the contact email.",
+          `Generated at: ${now}`
+        ].join("\n");
+
+        const blob = new Blob([content], { type: "text/plain;charset=utf-8" });
+        const url = URL.createObjectURL(blob);
+        const a = document.createElement("a");
+        const suffix = (code || "pending").replace(/[^A-Za-z0-9_-]/g, "_");
+        a.href = url;
+        a.download = `deletion-code-${suffix}.txt`;
+        document.body.appendChild(a);
+        a.click();
+        a.remove();
+        URL.revokeObjectURL(url);
+      }
+
+      function showModal(modalEl) {
+        if (!modalEl) return;
+        modalEl.removeAttribute("hidden");
+        document.body.classList.add("modal-open");
+      }
+
+      function hideModal(modalEl) {
+        if (!modalEl) return;
+        modalEl.setAttribute("hidden", "");
+        if (!document.querySelector(".app-modal:not([hidden])")) {
+          document.body.classList.remove("modal-open");
+        }
+      }
+
+      async function resetConversationUI() {
+        try {
+          await fetch("/api/reset", { method: "POST" });
+        } catch {
+          // Keep UI reset even if backend reset fails.
+        }
+        const conversation = document.getElementById("conversation");
+        if (conversation) conversation.innerHTML = "";
+        appendMessage("assistant", STARTUP_HINT, { forceScroll: true });
+        mobileUiState.hasTyped = false;
+        mobileUiState.hasAssistantReply = false;
+        updateMobileChatLiveMode();
+        hasEndedChat = false;
+        setModelStatus("idle", "Klar");
+      }
+
+      async function sendPrompt(event) {
+        event.preventDefault();
+
+        const input = document.getElementById("prompt");
+        const submitBtn = document.querySelector("#chat-form button[type='submit']");
+        const prompt = input.value.trim();
+        if (!prompt) return;
+        markUserTypingStarted();
+        if (submitBtn) submitBtn.disabled = true;
+        startModelHeartbeat("Modellen arbejder", "working");
+
+        appendMessage("user", prompt, { forceScroll: true });
+        input.value = "";
+        autoResizePrompt();
+
+        // Create assistant bubble that we will fill incrementally
+        const assistantMsg = appendMessage("assistant", "", { forceScroll: true });
+        const assistantBodyEl = assistantMsg.body;
+        const assistantBubbleEl = assistantMsg.bubble;
+        let streamFinished = false;
+        let gotAnyToken = false;
+        let timeoutHandle = null;
+        let queueHintHandle = null;
+        const controller = new AbortController();
+
+        function clearStreamTimeout() {
+          if (timeoutHandle) {
+            clearTimeout(timeoutHandle);
+            timeoutHandle = null;
+          }
+        }
+
+        function clearQueueHint() {
+          if (queueHintHandle) {
+            clearTimeout(queueHintHandle);
+            queueHintHandle = null;
+          }
+        }
+
+        function armQueueHint() {
+          clearQueueHint();
+          queueHintHandle = setTimeout(() => {
+            if (streamFinished || gotAnyToken) return;
+            startModelHeartbeat("I kø hos modellen", "queued");
+          }, 3500);
+        }
+
+        function armStreamTimeout() {
+          clearStreamTimeout();
+          timeoutHandle = setTimeout(async () => {
+            if (streamFinished) return;
+            try {
+              controller.abort();
+            } catch {}
+            await fallbackToNonStream();
+          }, gotAnyToken ? STREAM_IDLE_TIMEOUT_MS : STREAM_FIRST_TOKEN_TIMEOUT_MS);
+        }
+
+        async function fallbackToNonStream() {
+          if (streamFinished) return;
+          setModelStatus("degraded", "Forbindelse langsom. Prøver fallback...");
+          try {
+            const r = await fetch("/api/chat", {
+              method: "POST",
+              headers: { "Content-Type": "application/json" },
+              body: JSON.stringify({ prompt })
+            });
+            if (!r.ok) {
+              assistantBodyEl.textContent = "Der opstod en fejl under hentning af svar.";
+              streamFinished = true;
+              clearStreamTimeout();
+              stopModelHeartbeat();
+              setModelStatus("error", "Model-fejl: intet svar");
+              if (submitBtn) submitBtn.disabled = false;
+              return;
+            }
+            const data = await r.json();
+            const txt = data.output || data.error || "Ingen svar modtaget.";
+            assistantBodyEl.innerHTML = renderMarkdownToSafeHtml(txt);
+            markAssistantReplyReceived();
+            addFeedbackControls(assistantBubbleEl, prompt, txt, data.interaction_id || "");
+            stopModelHeartbeat();
+            setModelStatus("idle", "Klar");
+          } catch {
+            assistantBodyEl.textContent = "Forbindelsen gik i stå, og fallback mislykkedes.";
+            stopModelHeartbeat();
+            setModelStatus("error", "Forbindelsesfejl: model utilgængelig");
+          } finally {
+            streamFinished = true;
+            clearStreamTimeout();
+            clearQueueHint();
+            if (submitBtn) submitBtn.disabled = false;
+          }
+        }
+
+        let resp;
+        try {
+          resp = await fetch("/api/chat_stream", {
+            method: "POST",
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify({ prompt }),
+            signal: controller.signal
+          });
+        } catch (e) {
+          setModelStatus("degraded", "Kunne ikke starte stream. Prøver fallback...");
+          await fallbackToNonStream();
+          return;
+        }
+
+        if (!resp.ok || !resp.body) {
+          try {
+            const err = await resp.json();
+            assistantBodyEl.textContent = err.error || "Error contacting server.";
+          } catch {
+            assistantBodyEl.textContent = "Error contacting server.";
+          }
+          stopModelHeartbeat();
+          setModelStatus("error", "Model-fejl: stream utilgængelig");
+          if (submitBtn) submitBtn.disabled = false;
+          return;
+        }
+
+        const reader = resp.body.getReader();
+        const decoder = new TextDecoder("utf-8");
+        let buffer = "";
+
+        // We accumulate the raw markdown text here and re-render on each update.
+        // This keeps formatting correct for **bold**, lists, etc.
+        let fullMarkdown = "";
+        armStreamTimeout();
+        armQueueHint();
+
+        while (true) {
+          let value, done;
+          try {
+            ({ value, done } = await reader.read());
+          } catch {
+            if (!streamFinished) {
+              await fallbackToNonStream();
+            }
+            return;
+          }
+          if (done) break;
+
+          buffer += decoder.decode(value, { stream: true });
+
+          // SSE events are separated by double newline
+          const parts = buffer.split("\n\n");
+          buffer = parts.pop() || "";
+
+          for (const part of parts) {
+            const line = part.split("\n").find(l => l.startsWith("data: "));
+            if (!line) continue;
+
+            let payload;
+            try {
+              payload = JSON.parse(line.slice(6));
+            } catch {
+              continue;
+            }
+
+            if (payload.token) {
+              if (!gotAnyToken) {
+                clearQueueHint();
+                startModelHeartbeat("Modellen arbejder", "working");
+              }
+              gotAnyToken = true;
+              armStreamTimeout();
+              fullMarkdown += payload.token;
+              setModelStatus("working", "Modellen skriver svar...");
+              markAssistantReplyReceived();
+              const convo = document.getElementById("conversation");
+              const shouldStickToBottom = isNearBottom(convo);
+              assistantBodyEl.innerHTML = renderMarkdownToSafeHtml(fullMarkdown);
+              if (shouldStickToBottom) {
+                scrollToBottom(convo);
+              }
+            }
+
+            if (payload.error) {
+              assistantBodyEl.textContent = payload.error;
+              streamFinished = true;
+              clearStreamTimeout();
+              clearQueueHint();
+              stopModelHeartbeat();
+              setModelStatus("error", "Model-fejl under svar");
+              if (submitBtn) submitBtn.disabled = false;
+              return;
+            }
+
+            if (payload.done) {
+              addFeedbackControls(assistantBubbleEl, prompt, fullMarkdown, payload.interaction_id || "");
+              streamFinished = true;
+              clearStreamTimeout();
+              clearQueueHint();
+              stopModelHeartbeat();
+              setModelStatus("idle", "Klar");
+              if (submitBtn) submitBtn.disabled = false;
+              return;
+            }
+          }
+        }
+        if (fullMarkdown) {
+          addFeedbackControls(assistantBubbleEl, prompt, fullMarkdown);
+        }
+        streamFinished = true;
+        clearStreamTimeout();
+        clearQueueHint();
+        stopModelHeartbeat();
+        setModelStatus("idle", "Klar");
+        if (submitBtn) submitBtn.disabled = false;
+      }
+
+      document.addEventListener("DOMContentLoaded", () => {
+        const form = document.getElementById("chat-form");
+        const input = document.getElementById("prompt");
+        const briefingModal = document.getElementById("briefing-modal");
+        const briefingAcceptBtn = document.getElementById("briefing-accept");
+        const briefingConsent = document.getElementById("briefing-consent");
+        const gdprMoreLink = document.getElementById("gdpr-more-link");
+        const gdprMoreDetails = document.getElementById("gdpr-more-details");
+        const debriefModal = document.getElementById("debrief-modal");
+        const debriefSubmitBtn = document.getElementById("debrief-submit");
+        const debriefSkipBtn = document.getElementById("debrief-skip");
+        const debriefWithdrawBtn = document.getElementById("debrief-withdraw");
+        const debriefDownloadCodeBtn = document.getElementById("debrief-download-code");
+        const inlineDownloadCodeBtn = document.getElementById("inline-download-code");
+        const endChatBtn = document.getElementById("end-chat-btn");
+        const debriefText = document.getElementById("debrief-text");
+        if (!form || !input) return;
+
+        const conversation = document.getElementById("conversation");
+        if (conversation && conversation.children.length === 0) {
+          appendMessage("assistant", STARTUP_HINT, { forceScroll: true });
+        }
+
+        input.addEventListener("keydown", (event) => {
+          if (event.key === "Enter" && !event.shiftKey) {
+            event.preventDefault();
+            form.requestSubmit();
+          }
+        });
+
+        input.addEventListener("input", () => {
+          autoResizePrompt();
+          if (input.value.trim()) {
+            markUserTypingStarted();
+          }
+        });
+        autoResizePrompt();
+        setupMobileDisclaimer();
+        updateMobileChatLiveMode();
+        window.addEventListener("resize", updateMobileChatLiveMode);
+        setModelStatus("idle", "Klar");
+        syncDeletionCodeUi();
+        hideModal(debriefModal);
+        hideModal(briefingModal);
+
+        function openBriefingIfNeeded() {
+          const alreadyAck = safeStorageGet(BRIEFING_KEY) === "1";
+          if (alreadyAck) {
+            setComposerEnabled(true);
+            return;
+          }
+          if (briefingConsent) briefingConsent.checked = false;
+          if (briefingAcceptBtn) briefingAcceptBtn.disabled = true;
+          setComposerEnabled(false);
+          showModal(briefingModal);
+        }
+
+        if (briefingConsent && briefingAcceptBtn) {
+          briefingConsent.addEventListener("change", () => {
+            briefingAcceptBtn.disabled = !briefingConsent.checked;
+          });
+        }
+
+        if (gdprMoreLink && gdprMoreDetails && briefingModal) {
+          gdprMoreLink.addEventListener("click", (event) => {
+            event.preventDefault();
+            if (briefingModal.hasAttribute("hidden")) {
+              showModal(briefingModal);
+            }
+            gdprMoreDetails.scrollIntoView({ behavior: "smooth", block: "center" });
+          });
+        }
+
+        if (briefingAcceptBtn) {
+          briefingAcceptBtn.addEventListener("click", async () => {
+            if (briefingConsent && !briefingConsent.checked) return;
+            safeStorageSet(BRIEFING_KEY, "1");
+            hideModal(briefingModal);
+            setComposerEnabled(true);
+            input.focus();
+            const evtResp = await postSessionEvent("briefing_ack", {
+              version: BRIEFING_VERSION,
+              storage: "session",
+              consent: true,
+              consent_text: "Jeg accepterer, at mine indsamlede anonyme data bruges i forskningsøjemed. Jeg er indforstået med, at oplysninger i chatbot-svar kan være upræcise eller forkerte."
+            });
+            const deletionCode = (evtResp && evtResp.deletion_code) ? String(evtResp.deletion_code) : "";
+            if (deletionCode) {
+              safeStorageSet(DELETION_CODE_KEY, deletionCode);
+              syncDeletionCodeUi();
+            }
+          });
+        }
+
+        if (endChatBtn) {
+          endChatBtn.addEventListener("click", () => {
+            hasEndedChat = true;
+            showModal(debriefModal);
+          });
+        }
+
+        if (debriefSkipBtn) {
+          debriefSkipBtn.addEventListener("click", async () => {
+            hideModal(debriefModal);
+            postSessionEvent("debrief_skip", {});
+            await resetConversationUI();
+          });
+        }
+
+        if (debriefSubmitBtn) {
+          debriefSubmitBtn.addEventListener("click", async () => {
+            const text = (debriefText?.value || "").trim();
+            if (debriefText) debriefText.value = "";
+            hideModal(debriefModal);
+            postSessionEvent("debrief_submit", { feedback: text });
+            await resetConversationUI();
+          });
+        }
+
+        if (debriefWithdrawBtn) {
+          debriefWithdrawBtn.addEventListener("click", async () => {
+            const confirmed = window.confirm(
+              "Vil du tilbagetrække samtykke og slette alle data fra denne session? Handlingen kan ikke fortrydes."
+            );
+            if (!confirmed) return;
+
+            try {
+              await fetch("/api/withdraw_consent", { method: "POST" });
+            } catch {
+              // no-op; continue with local reset so user is not stuck.
+            }
+            safeStorageRemove(BRIEFING_KEY);
+            safeStorageRemove(DELETION_CODE_KEY);
+            syncDeletionCodeUi();
+            hideModal(debriefModal);
+            postSessionEvent("consent_withdrawn", { requested_via_ui: true });
+            await resetConversationUI();
+            showModal(briefingModal);
+          });
+        }
+
+        if (debriefDownloadCodeBtn) {
+          debriefDownloadCodeBtn.addEventListener("click", () => {
+            downloadDeletionCodeTxt();
+          });
+        }
+
+        if (inlineDownloadCodeBtn) {
+          inlineDownloadCodeBtn.addEventListener("click", () => {
+            downloadDeletionCodeTxt();
+          });
+        }
+
+        if (debriefModal) {
+          debriefModal.addEventListener("click", (event) => {
+            const anchor = event.target && event.target.closest ? event.target.closest(".party-links a[href]") : null;
+            if (!anchor) return;
+            postSessionEvent("debrief_link_click", {
+              url: anchor.getAttribute("href") || "",
+              label: (anchor.textContent || "").trim(),
+              party_key: (anchor.dataset && anchor.dataset.partyKey) ? anchor.dataset.partyKey : "",
+              link_type: (anchor.dataset && anchor.dataset.linkType) ? anchor.dataset.linkType : "party_site"
+            });
+          });
+        }
+
+        openBriefingIfNeeded();
+
+        window.addEventListener("beforeunload", (event) => {
+          if (hasEndedChat) return;
+          event.preventDefault();
+          event.returnValue = "";
+        });
+      });
+    </script>
+  </head>
+
+  <body>
+    <div class="app-layout">
+      <aside id="disclaimer-panel" class="disclaimer-panel is-expanded">
+        <button id="disclaimer-toggle" class="disclaimer-toggle" type="button" aria-expanded="true">
+          Skjul disclaimer
+        </button>
+        <h2>Om denne service:</h2>
+        <p>Dette værktøj giver svar baseret på de kilder, der er tilgængelige i systemet. Disse er de opstillingsberettigede danske partiers principprogrammer samt Wikipedia-sider pr. 28/2/2026.</p>
+        <p>
+          Sprogmodellen bag svarene er
+          <a href="https://ollama.com/jobautomation/OpenEuroLLM-Danish" target="_blank" rel="noopener noreferrer"><b>OpenEuroLLM-Danish</b></a>.
+        </p>
+        <p class="disclaimer-warning">Svar kan være ufuldstændige og indeholder ofte fejl. Modellen har ikke adgang til internettet, og derfor er påstande om websøgninger ikke korrekte. Brug altid officielle partihjemmesider som endelig kilde. Brug også traditionelle kandidattest til at informere dit endelige stemmevalg.</p>
+        <p>Vær opmærksom på, at modellen ikke giver juridisk, økonomisk eller personlig rådgivning.</p>
+        
+
+        <h2>Databehandling:</h2>
+        <p><b>Vær opmærksom på at ALLE beskeder du sender til chatbotten gemmes anonymt med henblik på forskning.</b></p>
+        <p>Indtast derfor ikke oplysninger såsom dit navn, adresse, mailadresse eller telefonnummer.</p>
+        <p>Al data gemmes udelukkende lokalt på en sikker Ucloud-server. Ingen eksterne tjenester benyttes.</p>
+
+        <div class="contact-block">
+          <h2>Kontaktperson:</h2>
+          <p>Emil Bakkensen Johansen</p>
+          <p>Postdoc, Digital Democracy Centre</p>
+          <p>your-contact@example.org</p>
+        </div>
+
+      </aside>
+
+      <div class="chat-container">
+        <header>
+          <h1 id="app-title">AI ValgChat FV26</h1>
+          <div id="model-status" class="model-status is-idle" aria-live="polite">
+            <span class="status-dot"></span>
+            <span id="model-status-text">Klar</span>
+          </div>
+        </header>
+
+        <main id="conversation" class="conversation"></main>
+
+        <form id="chat-form" onsubmit="sendPrompt(event)">
+          <div class="input-row">
+            <textarea
+              id="prompt"
+              name="prompt"
+              placeholder="Stil dit spørgsmål..."
+              autocomplete="off"
+              rows="1"
+              required
+            ></textarea>
+            <div class="input-actions">
+              <button id="end-chat-btn" type="button" class="end-chat-btn">Afslut chat</button>
+              <button type="submit">Send</button>
+            </div>
+          </div>
+          <p id="prompt-warning" class="prompt-warning">OBS: ALLE beskeder gemmes til forskning. Indtast ikke personlige oplysninger. Husk at trykke <strong>Afslut chat</strong> før du lukker fanen.</p>
+          <p class="prompt-deletion-code">
+            Slettekode: <strong id="deletion-code-inline-value">Ikke oprettet endnu</strong> · sendes til
+            <strong id="deletion-code-inline-contact">your-contact@example.org</strong> hvis samtykke tilbagetrækkes.
+            <button id="inline-download-code" type="button" class="inline-download-code-btn">Download kode (.txt)</button>
+          </p>
+        </form>
+      </div>
+    </div>
+
+    <!-- DDC logo outside chat window -->
+    <img
+      src="{{ url_for('static', filename='DDC-logo.svg') }}"
+      alt="DDC logo"
+      class="ddc-logo-outside"
+    >
+
+    <div id="briefing-modal" class="app-modal" hidden>
+      <div class="app-modal-card" role="dialog" aria-modal="true" aria-labelledby="briefing-title">
+        <h2 id="briefing-title">Vigtig information før du starter</h2>
+        <p>Dette værktøj er kun til vejledende information om dansk politik og folketingsvalget 2026.</p>
+        <p><strong>Advarsel om potentiel misinformation:</strong> Svar kan være upræcise, forældede eller direkte forkerte. Brug derfor altid officielle partihjemmesider og andre troværdige kilder til at verificere centrale påstande.</p>
+        <p><strong>Alle beskeder gemmes anonymt til forskning.</strong></p>
+        <div id="gdpr-more-details" class="gdpr-more">
+          <p><strong>Information om samtykke</strong></p>
+          <p>Deployment owners should provide their own participant information and consent materials.</p>
+          <p>Data bruges til forskningsanalyse af, hvordan borgere anvender en AI-baseret valgchatbot (fx spørgetyper, svarmønstre og kvalitetsvurderinger).</p>
+          <p>Vi beder dig om ikke at indtaste personoplysninger. Hvis du alligevel gør det, kan oplysningerne indgå i de loggede tekstfelter.</p>
+          <p>Retsgrundlag: Samtykke. Du kan trække samtykke tilbage i appen (“Tilbagetræk samtykke og slet data”) eller senere ved at sende din slettekode til <strong>your-contact@example.org</strong>.</p>
+          <p>Ved tilbagetrækning slettes data knyttet til din session/slettekode fra projektets logdata, medmindre opbevaring er lovpligtig.</p>
+          <p><strong>Samtykkeerklæring:</strong> Ved at give samtykke og bruge værktøjet bekræfter du, at:</p>
+          <ol>
+            <li>Du har læst og forstået deltagerinformationen.</li>
+            <li>Du forstår, at deltagelse er frivillig.</li>
+            <li>Du forstår, at dine prompts, systemets svar og interaktionsmetadata logges til forskningsformål.</li>
+            <li>Du forstår, at du ikke bør indtaste personhenførbare eller følsomme oplysninger i chatten.</li>
+            <li>Du forstår, at AI-svar kan være ufuldstændige eller forkerte.</li>
+            <li>Du forstår, at du til enhver tid kan trække samtykke tilbage, enten direkte i brugerfladen, eller senere ved at kontakte forskergruppen med din slettekode.</li>
+            <li>Du forstår, at hvis du trækker samtykke tilbage, slettes data knyttet til din session/slettekode fra projektets logfiler, medmindre opbevaring er lovpligtig.</li>
+            <li>Du accepterer, at anonymiserede interaktionsdata kan bruges i forskningspublikationer og rapporter i aggregeret eller af-identificeret form.</li>
+          </ol>
+          <p><strong>Ved brug giver du samtykke til deltagelse i dette forskningsprojekt.</strong></p>
+        </div>
+        <label class="briefing-consent">
+          <input id="briefing-consent" type="checkbox">
+          <span>Jeg accepterer, at mine indsamlede anonyme data bruges i forskningsøjemed. Jeg er indforstået med, at oplysninger i chatbot-svar kan være upræcise eller forkerte.</span>
+        </label>
+        <div class="app-modal-actions">
+          <button id="briefing-accept" type="button" class="modal-primary-btn" disabled>Jeg forstår</button>
+        </div>
+      </div>
+    </div>
+
+    <div id="debrief-modal" class="app-modal" hidden>
+      <div class="app-modal-card" role="dialog" aria-modal="true" aria-labelledby="debrief-title">
+        <h2 id="debrief-title">Tak for din chat</h2>
+        <p><strong>Vigtigt:</strong> Modellen kan give misinformation. Brug svaret som inspiration, ikke som endelig sandhed.</p>
+        <p>Undersøg partierne nærmere i officielle kilder, før du træffer beslutninger:</p>
+        <p class="party-links">
+          <a href="https://www.socialdemokratiet.dk/" data-party-key="socialdemokratiet" target="_blank" rel="noopener noreferrer">Socialdemokratiet</a> ·
+          <a href="https://www.venstre.dk/" data-party-key="venstre" target="_blank" rel="noopener noreferrer">Venstre</a> ·
+          <a href="https://sf.dk/" data-party-key="sf" target="_blank" rel="noopener noreferrer">SF</a> ·
+          <a href="https://www.radikale.dk/" data-party-key="radikale" target="_blank" rel="noopener noreferrer">Radikale Venstre</a> ·
+          <a href="https://konservative.dk/" data-party-key="konservative" target="_blank" rel="noopener noreferrer">Konservative</a> ·
+          <a href="https://www.liberalalliance.dk/" data-party-key="liberalalliance" target="_blank" rel="noopener noreferrer">Liberal Alliance</a> ·
+          <a href="https://enhedslisten.dk/" data-party-key="enhedslisten" target="_blank" rel="noopener noreferrer">Enhedslisten</a> ·
+          <a href="https://danskfolkeparti.dk/" data-party-key="danskfolkeparti" target="_blank" rel="noopener noreferrer">Dansk Folkeparti</a> ·
+          <a href="https://danmarksdemokraterne.dk/" data-party-key="danmarksdemokraterne" target="_blank" rel="noopener noreferrer">Danmarksdemokraterne</a> ·
+          <a href="https://moderaterne.dk/" data-party-key="moderaterne" target="_blank" rel="noopener noreferrer">Moderaterne</a> ·
+          <a href="https://alternativet.dk/" data-party-key="alternativet" target="_blank" rel="noopener noreferrer">Alternativet</a> ·
+          <a href="https://borgernesparti.dk/" data-party-key="borgernesparti" target="_blank" rel="noopener noreferrer">Borgernes Parti</a>
+        </p>
+        <p class="party-links">
+          <strong>Tag yderligere en eller flere af de traditionelle kandidattest:</strong>
+        </p>
+        <p class="party-links">
+          <a href="https://www.dr.dk/nyheder/politik/folketingsvalg/kandidattest" data-link-type="candidate_test" target="_blank" rel="noopener noreferrer">DR</a> ·
+          <a href="https://nyheder.tv2.dk/kandidattest" data-link-type="candidate_test" target="_blank" rel="noopener noreferrer">TV2</a> ·
+          <a href="https://www.altinget.dk/kandidattest" data-link-type="candidate_test" target="_blank" rel="noopener noreferrer">Altinget</a>
+        </p>
+        <p class="deletion-code-note">
+          Din slettekode: <strong id="deletion-code-value">Ikke oprettet endnu</strong><br>
+          Hvis du senere vil have dine data slettet, så send koden til <strong id="deletion-code-contact">your-contact@example.org</strong>.
+          <span class="deletion-code-actions">
+            <button id="debrief-download-code" type="button" class="modal-secondary-btn">Download kode (.txt)</button>
+          </span>
+        </p>
+        <textarea id="debrief-text" class="debrief-textarea" rows="3" placeholder="Skriv evt. kort feedback her..."></textarea>
+        <div class="app-modal-actions">
+          <button id="debrief-withdraw" type="button" class="modal-danger-btn">Tilbagetræk samtykke og slet data</button>
+          <button id="debrief-skip" type="button" class="modal-secondary-btn">Luk uden feedback</button>
+          <button id="debrief-submit" type="button" class="modal-primary-btn">Send og afslut</button>
+        </div>
+      </div>
+    </div>
+  </body>
+</html>

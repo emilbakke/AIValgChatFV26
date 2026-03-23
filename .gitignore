@@ -1,0 +1,11 @@
+__pycache__/
+*.pyc
+api_key
+logs.jsonl
+logs.json
+metrics.jsonl
+metrics.json
+*.tmp
+.env
+.DS_Store
+README_root_reference.md

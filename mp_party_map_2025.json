@@ -1,0 +1,1408 @@
+{
+  "generated_at": "2026-02-27T12:00:26Z",
+  "description": "MPs with folketingsgruppe membership active at some point in 2025. Party keys map to party_context_map.json.",
+  "total_people": 199,
+  "mapped_people": 189,
+  "unmapped_group_shortcodes": [
+    "IA",
+    "JF",
+    "N",
+    "SP",
+    "UFG"
+  ],
+  "people": {
+    "Aaja Chemnitz": {
+      "party_context_key": null,
+      "group_short": "IA",
+      "group_name": "Inuit Ataqatigiit",
+      "source_year": 2025,
+      "source": "Folketinget OData (oda.ft.dk)"
+    },
+    "Aki-Matilda Høegh-Dam": {
+      "party_context_key": null,
+      "group_short": "N",
+      "group_name": "Naleraq",
+      "source_year": 2025,
+      "source": "Folketinget OData (oda.ft.dk)"
+    },
+    "Alex Ahrendtsen": {
+      "party_context_key": "danskfolkeparti",
+      "group_short": "DF",
+      "group_name": "Dansk Folkeparti",
+      "source_year": 2025,
+      "source": "Folketinget OData (oda.ft.dk)"
+    },
+    "Alex Vanopslagh": {
+      "party_context_key": "liberalalliance",
+      "group_short": "LA",
+      "group_name": "Liberal Alliance",
+      "source_year": 2025,
+      "source": "Folketinget OData (oda.ft.dk)"
+    },
+    "Alexander Ryle": {
+      "party_context_key": "liberalalliance",
+      "group_short": "LA",
+      "group_name": "Liberal Alliance",
+      "source_year": 2025,
+      "source": "Folketinget OData (oda.ft.dk)"
+    },
+    "Ammar Ali": {
+      "party_context_key": "moderaterne",
+      "group_short": "M",
+      "group_name": "Moderaterne",
+      "source_year": 2025,
+      "source": "Folketinget OData (oda.ft.dk)"
+    },
+    "Anders Kronborg": {
+      "party_context_key": "socialdemokratiet",
+      "group_short": "S",
+      "group_name": "Socialdemokratiet",
+      "source_year": 2025,
+      "source": "Folketinget OData (oda.ft.dk)"
+    },
+    "Ane Halsboe-Jørgensen": {
+      "party_context_key": "socialdemokratiet",
+      "group_short": "S",
+      "group_name": "Socialdemokratiet",
+      "source_year": 2025,
+      "source": "Folketinget OData (oda.ft.dk)"
+    },
+    "Anna Falkenberg": {
+      "party_context_key": null,
+      "group_short": "SP",
+      "group_name": "Sambandsflokkurin",
+      "source_year": 2025,
+      "source": "Folketinget OData (oda.ft.dk)"
+    },
+    "Anne Paulin": {
+      "party_context_key": "socialdemokratiet",
+      "group_short": "S",
+      "group_name": "Socialdemokratiet",
+      "source_year": 2025,
+      "source": "Folketinget OData (oda.ft.dk)"
+    },
+    "Anne Valentina Berthelsen": {
+      "party_context_key": "sf",
+      "group_short": "SF",
+      "group_name": "Socialistisk Folkeparti",
+      "source_year": 2025,
+      "source": "Folketinget OData (oda.ft.dk)"
+    },
+    "Anni Matthiesen": {
+      "party_context_key": "venstre",
+      "group_short": "V",
+      "group_name": "Venstre, Danmarks Liberale Parti",
+      "source_year": 2025,
+      "source": "Folketinget OData (oda.ft.dk)"
+    },
+    "Astrid Carøe": {
+      "party_context_key": "sf",
+      "group_short": "SF",
+      "group_name": "Socialistisk Folkeparti",
+      "source_year": 2025,
+      "source": "Folketinget OData (oda.ft.dk)"
+    },
+    "Astrid Krag": {
+      "party_context_key": "socialdemokratiet",
+      "group_short": "S",
+      "group_name": "Socialdemokratiet",
+      "source_year": 2025,
+      "source": "Folketinget OData (oda.ft.dk)"
+    },
+    "Benny Engelbrecht": {
+      "party_context_key": "socialdemokratiet",
+      "group_short": "S",
+      "group_name": "Socialdemokratiet",
+      "source_year": 2025,
+      "source": "Folketinget OData (oda.ft.dk)"
+    },
+    "Betina Kastbjerg": {
+      "party_context_key": "danmarksdemokraterne",
+      "group_short": "DD",
+      "group_name": "Danmarksdemokraterne – Inger Støjberg",
+      "source_year": 2025,
+      "source": "Folketinget OData (oda.ft.dk)"
+    },
+    "Birgitte Bergman": {
+      "party_context_key": "konservative",
+      "group_short": "KF",
+      "group_name": "Det Konservative Folkeparti",
+      "source_year": 2025,
+      "source": "Folketinget OData (oda.ft.dk)"
+    },
+    "Birgitte Vind": {
+      "party_context_key": "socialdemokratiet",
+      "group_short": "S",
+      "group_name": "Socialdemokratiet",
+      "source_year": 2025,
+      "source": "Folketinget OData (oda.ft.dk)"
+    },
+    "Bjarne Laustsen": {
+      "party_context_key": "socialdemokratiet",
+      "group_short": "S",
+      "group_name": "Socialdemokratiet",
+      "source_year": 2025,
+      "source": "Folketinget OData (oda.ft.dk)"
+    },
+    "Bjørn Brandenborg": {
+      "party_context_key": "socialdemokratiet",
+      "group_short": "S",
+      "group_name": "Socialdemokratiet",
+      "source_year": 2025,
+      "source": "Folketinget OData (oda.ft.dk)"
+    },
+    "Brigitte Klintskov Jerkel": {
+      "party_context_key": "konservative",
+      "group_short": "KF",
+      "group_name": "Det Konservative Folkeparti",
+      "source_year": 2025,
+      "source": "Folketinget OData (oda.ft.dk)"
+    },
+    "Camilla Fabricius": {
+      "party_context_key": "socialdemokratiet",
+      "group_short": "S",
+      "group_name": "Socialdemokratiet",
+      "source_year": 2025,
+      "source": "Folketinget OData (oda.ft.dk)"
+    },
+    "Carl Andersen": {
+      "party_context_key": "liberalalliance",
+      "group_short": "LA",
+      "group_name": "Liberal Alliance",
+      "source_year": 2025,
+      "source": "Folketinget OData (oda.ft.dk)"
+    },
+    "Carl Valentin": {
+      "party_context_key": "sf",
+      "group_short": "SF",
+      "group_name": "Socialistisk Folkeparti",
+      "source_year": 2025,
+      "source": "Folketinget OData (oda.ft.dk)"
+    },
+    "Carsten Bach": {
+      "party_context_key": "liberalalliance",
+      "group_short": "LA",
+      "group_name": "Liberal Alliance",
+      "source_year": 2025,
+      "source": "Folketinget OData (oda.ft.dk)"
+    },
+    "Charlotte Bagge Hansen": {
+      "party_context_key": "moderaterne",
+      "group_short": "M",
+      "group_name": "Moderaterne",
+      "source_year": 2025,
+      "source": "Folketinget OData (oda.ft.dk)"
+    },
+    "Charlotte Broman Mølbæk": {
+      "party_context_key": "sf",
+      "group_short": "SF",
+      "group_name": "Socialistisk Folkeparti",
+      "source_year": 2025,
+      "source": "Folketinget OData (oda.ft.dk)"
+    },
+    "Charlotte Munch Pasler": {
+      "party_context_key": "danmarksdemokraterne",
+      "group_short": "DD",
+      "group_name": "Danmarksdemokraterne – Inger Støjberg",
+      "source_year": 2025,
+      "source": "Folketinget OData (oda.ft.dk)"
+    },
+    "Christian Friis Bach": {
+      "party_context_key": "venstre",
+      "group_short": "V",
+      "group_name": "Venstre, Danmarks Liberale Parti",
+      "source_year": 2025,
+      "source": "Folketinget OData (oda.ft.dk)"
+    },
+    "Christian Rabjerg Madsen": {
+      "party_context_key": "socialdemokratiet",
+      "group_short": "S",
+      "group_name": "Socialdemokratiet",
+      "source_year": 2025,
+      "source": "Folketinget OData (oda.ft.dk)"
+    },
+    "Christina Olumeko": {
+      "party_context_key": "alternativet",
+      "group_short": "ALT",
+      "group_name": "Alternativet",
+      "source_year": 2025,
+      "source": "Folketinget OData (oda.ft.dk)"
+    },
+    "Christoffer Aagaard Melson": {
+      "party_context_key": "venstre",
+      "group_short": "V",
+      "group_name": "Venstre, Danmarks Liberale Parti",
+      "source_year": 2025,
+      "source": "Folketinget OData (oda.ft.dk)"
+    },
+    "Claus Jørgensen": {
+      "party_context_key": "sf",
+      "group_short": "SF",
+      "group_name": "Socialistisk Folkeparti",
+      "source_year": 2025,
+      "source": "Folketinget OData (oda.ft.dk)"
+    },
+    "Dennis Flydtkjær": {
+      "party_context_key": "danmarksdemokraterne",
+      "group_short": "DD",
+      "group_name": "Danmarksdemokraterne – Inger Støjberg",
+      "source_year": 2025,
+      "source": "Folketinget OData (oda.ft.dk)"
+    },
+    "Dina Raabjerg": {
+      "party_context_key": "konservative",
+      "group_short": "KF",
+      "group_name": "Det Konservative Folkeparti",
+      "source_year": 2025,
+      "source": "Folketinget OData (oda.ft.dk)"
+    },
+    "Elvira Kûitse": {
+      "party_context_key": null,
+      "group_short": "N",
+      "group_name": "Naleraq",
+      "source_year": 2025,
+      "source": "Folketinget OData (oda.ft.dk)"
+    },
+    "Erik Veje Rasmussen": {
+      "party_context_key": "venstre",
+      "group_short": "V",
+      "group_name": "Venstre, Danmarks Liberale Parti",
+      "source_year": 2025,
+      "source": "Folketinget OData (oda.ft.dk)"
+    },
+    "Erling Bonnesen": {
+      "party_context_key": "venstre",
+      "group_short": "V",
+      "group_name": "Venstre, Danmarks Liberale Parti",
+      "source_year": 2025,
+      "source": "Folketinget OData (oda.ft.dk)"
+    },
+    "Eva Kjer Hansen": {
+      "party_context_key": "venstre",
+      "group_short": "V",
+      "group_name": "Venstre, Danmarks Liberale Parti",
+      "source_year": 2025,
+      "source": "Folketinget OData (oda.ft.dk)"
+    },
+    "Fie Hækkerup": {
+      "party_context_key": "socialdemokratiet",
+      "group_short": "S",
+      "group_name": "Socialdemokratiet",
+      "source_year": 2025,
+      "source": "Folketinget OData (oda.ft.dk)"
+    },
+    "Flemming Møller Mortensen": {
+      "party_context_key": "socialdemokratiet",
+      "group_short": "S",
+      "group_name": "Socialdemokratiet",
+      "source_year": 2025,
+      "source": "Folketinget OData (oda.ft.dk)"
+    },
+    "Franciska Rosenkilde": {
+      "party_context_key": "alternativet",
+      "group_short": "ALT",
+      "group_name": "Alternativet",
+      "source_year": 2025,
+      "source": "Folketinget OData (oda.ft.dk)"
+    },
+    "Frederik Bloch Münster": {
+      "party_context_key": "konservative",
+      "group_short": "KF",
+      "group_name": "Det Konservative Folkeparti",
+      "source_year": 2025,
+      "source": "Folketinget OData (oda.ft.dk)"
+    },
+    "Frederik Vad": {
+      "party_context_key": "socialdemokratiet",
+      "group_short": "S",
+      "group_name": "Socialdemokratiet",
+      "source_year": 2025,
+      "source": "Folketinget OData (oda.ft.dk)"
+    },
+    "Gunvor Wibroe": {
+      "party_context_key": "socialdemokratiet",
+      "group_short": "S",
+      "group_name": "Socialdemokratiet",
+      "source_year": 2025,
+      "source": "Folketinget OData (oda.ft.dk)"
+    },
+    "Halime Oguz": {
+      "party_context_key": "sf",
+      "group_short": "SF",
+      "group_name": "Socialistisk Folkeparti",
+      "source_year": 2025,
+      "source": "Folketinget OData (oda.ft.dk)"
+    },
+    "Hans Andersen": {
+      "party_context_key": "venstre",
+      "group_short": "V",
+      "group_name": "Venstre, Danmarks Liberale Parti",
+      "source_year": 2025,
+      "source": "Folketinget OData (oda.ft.dk)"
+    },
+    "Hans Christian Schmidt": {
+      "party_context_key": "venstre",
+      "group_short": "V",
+      "group_name": "Venstre, Danmarks Liberale Parti",
+      "source_year": 2025,
+      "source": "Folketinget OData (oda.ft.dk)"
+    },
+    "Hans Kristian Skibby": {
+      "party_context_key": "danmarksdemokraterne",
+      "group_short": "DD",
+      "group_name": "Danmarksdemokraterne – Inger Støjberg",
+      "source_year": 2025,
+      "source": "Folketinget OData (oda.ft.dk)"
+    },
+    "Heidi Bank": {
+      "party_context_key": "venstre",
+      "group_short": "V",
+      "group_name": "Venstre, Danmarks Liberale Parti",
+      "source_year": 2025,
+      "source": "Folketinget OData (oda.ft.dk)"
+    },
+    "Helena Artmann Andresen": {
+      "party_context_key": "liberalalliance",
+      "group_short": "LA",
+      "group_name": "Liberal Alliance",
+      "source_year": 2025,
+      "source": "Folketinget OData (oda.ft.dk)"
+    },
+    "Helene Brydensholt": {
+      "party_context_key": "alternativet",
+      "group_short": "ALT",
+      "group_name": "Alternativet",
+      "source_year": 2025,
+      "source": "Folketinget OData (oda.ft.dk)"
+    },
+    "Helle Bonnesen": {
+      "party_context_key": "konservative",
+      "group_short": "KF",
+      "group_name": "Det Konservative Folkeparti",
+      "source_year": 2025,
+      "source": "Folketinget OData (oda.ft.dk)"
+    },
+    "Henrik Frandsen": {
+      "party_context_key": "moderaterne",
+      "group_short": "M",
+      "group_name": "Moderaterne",
+      "source_year": 2025,
+      "source": "Folketinget OData (oda.ft.dk)"
+    },
+    "Henrik Møller": {
+      "party_context_key": "socialdemokratiet",
+      "group_short": "S",
+      "group_name": "Socialdemokratiet",
+      "source_year": 2025,
+      "source": "Folketinget OData (oda.ft.dk)"
+    },
+    "Henrik Rejnholt Andersen": {
+      "party_context_key": "moderaterne",
+      "group_short": "M",
+      "group_name": "Moderaterne",
+      "source_year": 2025,
+      "source": "Folketinget OData (oda.ft.dk)"
+    },
+    "Ida Auken": {
+      "party_context_key": "socialdemokratiet",
+      "group_short": "S",
+      "group_name": "Socialdemokratiet",
+      "source_year": 2025,
+      "source": "Folketinget OData (oda.ft.dk)"
+    },
+    "Inger Støjberg": {
+      "party_context_key": "danmarksdemokraterne",
+      "group_short": "DD",
+      "group_name": "Danmarksdemokraterne – Inger Støjberg",
+      "source_year": 2025,
+      "source": "Folketinget OData (oda.ft.dk)"
+    },
+    "Jacob Jensen": {
+      "party_context_key": "venstre",
+      "group_short": "V",
+      "group_name": "Venstre, Danmarks Liberale Parti",
+      "source_year": 2025,
+      "source": "Folketinget OData (oda.ft.dk)"
+    },
+    "Jakob Engel-Schmidt": {
+      "party_context_key": "moderaterne",
+      "group_short": "M",
+      "group_name": "Moderaterne",
+      "source_year": 2025,
+      "source": "Folketinget OData (oda.ft.dk)"
+    },
+    "Jan E. Jørgensen": {
+      "party_context_key": "venstre",
+      "group_short": "V",
+      "group_name": "Venstre, Danmarks Liberale Parti",
+      "source_year": 2025,
+      "source": "Folketinget OData (oda.ft.dk)"
+    },
+    "Jens Henrik Thulesen Dahl": {
+      "party_context_key": "danmarksdemokraterne",
+      "group_short": "DD",
+      "group_name": "Danmarksdemokraterne – Inger Støjberg",
+      "source_year": 2025,
+      "source": "Folketinget OData (oda.ft.dk)"
+    },
+    "Jens Joel": {
+      "party_context_key": "socialdemokratiet",
+      "group_short": "S",
+      "group_name": "Socialdemokratiet",
+      "source_year": 2025,
+      "source": "Folketinget OData (oda.ft.dk)"
+    },
+    "Jens Meilvang": {
+      "party_context_key": "liberalalliance",
+      "group_short": "LA",
+      "group_name": "Liberal Alliance",
+      "source_year": 2025,
+      "source": "Folketinget OData (oda.ft.dk)"
+    },
+    "Jeppe Bruus": {
+      "party_context_key": "socialdemokratiet",
+      "group_short": "S",
+      "group_name": "Socialdemokratiet",
+      "source_year": 2025,
+      "source": "Folketinget OData (oda.ft.dk)"
+    },
+    "Jeppe Søe": {
+      "party_context_key": null,
+      "group_short": "UFG",
+      "group_name": "Uden for folketingsgrupperne - Jeppe Søe",
+      "source_year": 2025,
+      "source": "Folketinget OData (oda.ft.dk)"
+    },
+    "Jesper Petersen": {
+      "party_context_key": "socialdemokratiet",
+      "group_short": "S",
+      "group_name": "Socialdemokratiet",
+      "source_year": 2025,
+      "source": "Folketinget OData (oda.ft.dk)"
+    },
+    "Joachim Hoffmann-Petersen": {
+      "party_context_key": "konservative",
+      "group_short": "KF",
+      "group_name": "Det Konservative Folkeparti",
+      "source_year": 2025,
+      "source": "Folketinget OData (oda.ft.dk)"
+    },
+    "Jon Stephensen": {
+      "party_context_key": null,
+      "group_short": "UFG",
+      "group_name": "Uden for folketingsgrupperne - Jon Stephensen",
+      "source_year": 2025,
+      "source": "Folketinget OData (oda.ft.dk)"
+    },
+    "Kaare Dybvad Bek": {
+      "party_context_key": "socialdemokratiet",
+      "group_short": "S",
+      "group_name": "Socialdemokratiet",
+      "source_year": 2025,
+      "source": "Folketinget OData (oda.ft.dk)"
+    },
+    "Karin Gaardsted": {
+      "party_context_key": "socialdemokratiet",
+      "group_short": "S",
+      "group_name": "Socialdemokratiet",
+      "source_year": 2025,
+      "source": "Folketinget OData (oda.ft.dk)"
+    },
+    "Karin Liltorp": {
+      "party_context_key": "alternativet",
+      "group_short": "ALT",
+      "group_name": "Alternativet",
+      "source_year": 2025,
+      "source": "Folketinget OData (oda.ft.dk)"
+    },
+    "Karina Adsbøl": {
+      "party_context_key": "danmarksdemokraterne",
+      "group_short": "DD",
+      "group_name": "Danmarksdemokraterne – Inger Støjberg",
+      "source_year": 2025,
+      "source": "Folketinget OData (oda.ft.dk)"
+    },
+    "Karina Lorentzen Dehnhardt": {
+      "party_context_key": "sf",
+      "group_short": "SF",
+      "group_name": "Socialistisk Folkeparti",
+      "source_year": 2025,
+      "source": "Folketinget OData (oda.ft.dk)"
+    },
+    "Karsten Filsø": {
+      "party_context_key": "sf",
+      "group_short": "SF",
+      "group_name": "Socialistisk Folkeparti",
+      "source_year": 2025,
+      "source": "Folketinget OData (oda.ft.dk)"
+    },
+    "Karsten Hønge": {
+      "party_context_key": "sf",
+      "group_short": "SF",
+      "group_name": "Socialistisk Folkeparti",
+      "source_year": 2025,
+      "source": "Folketinget OData (oda.ft.dk)"
+    },
+    "Kasper Roug": {
+      "party_context_key": "socialdemokratiet",
+      "group_short": "S",
+      "group_name": "Socialdemokratiet",
+      "source_year": 2025,
+      "source": "Folketinget OData (oda.ft.dk)"
+    },
+    "Katrine Daugaard": {
+      "party_context_key": "liberalalliance",
+      "group_short": "LA",
+      "group_name": "Liberal Alliance",
+      "source_year": 2025,
+      "source": "Folketinget OData (oda.ft.dk)"
+    },
+    "Katrine Robsøe": {
+      "party_context_key": "radikale",
+      "group_short": "RV",
+      "group_name": "Radikale Venstre",
+      "source_year": 2025,
+      "source": "Folketinget OData (oda.ft.dk)"
+    },
+    "Ken Kristensen": {
+      "party_context_key": "venstre",
+      "group_short": "V",
+      "group_name": "Venstre, Danmarks Liberale Parti",
+      "source_year": 2025,
+      "source": "Folketinget OData (oda.ft.dk)"
+    },
+    "Kenneth Fredslund Petersen": {
+      "party_context_key": "danmarksdemokraterne",
+      "group_short": "DD",
+      "group_name": "Danmarksdemokraterne – Inger Støjberg",
+      "source_year": 2025,
+      "source": "Folketinget OData (oda.ft.dk)"
+    },
+    "Kim Aas": {
+      "party_context_key": "socialdemokratiet",
+      "group_short": "S",
+      "group_name": "Socialdemokratiet",
+      "source_year": 2025,
+      "source": "Folketinget OData (oda.ft.dk)"
+    },
+    "Kim Edberg Andersen": {
+      "party_context_key": "danmarksdemokraterne",
+      "group_short": "DD",
+      "group_name": "Danmarksdemokraterne – Inger Støjberg",
+      "source_year": 2025,
+      "source": "Folketinget OData (oda.ft.dk)"
+    },
+    "Kim Valentin": {
+      "party_context_key": "venstre",
+      "group_short": "V",
+      "group_name": "Venstre, Danmarks Liberale Parti",
+      "source_year": 2025,
+      "source": "Folketinget OData (oda.ft.dk)"
+    },
+    "Kirsten Normann Andersen": {
+      "party_context_key": "sf",
+      "group_short": "SF",
+      "group_name": "Socialistisk Folkeparti",
+      "source_year": 2025,
+      "source": "Folketinget OData (oda.ft.dk)"
+    },
+    "Kris Jensen Skriver": {
+      "party_context_key": "socialdemokratiet",
+      "group_short": "S",
+      "group_name": "Socialdemokratiet",
+      "source_year": 2025,
+      "source": "Folketinget OData (oda.ft.dk)"
+    },
+    "Kristian Bøgsted": {
+      "party_context_key": "danmarksdemokraterne",
+      "group_short": "DD",
+      "group_name": "Danmarksdemokraterne – Inger Støjberg",
+      "source_year": 2025,
+      "source": "Folketinget OData (oda.ft.dk)"
+    },
+    "Kristian Pihl Lorentzen": {
+      "party_context_key": "venstre",
+      "group_short": "V",
+      "group_name": "Venstre, Danmarks Liberale Parti",
+      "source_year": 2025,
+      "source": "Folketinget OData (oda.ft.dk)"
+    },
+    "Lars Boje Mathiesen": {
+      "party_context_key": "borgernesparti",
+      "group_short": "BP",
+      "group_name": "Borgernes Parti – Lars Boje Mathiesen",
+      "source_year": 2025,
+      "source": "Folketinget OData (oda.ft.dk)"
+    },
+    "Lars Christian Lilleholt": {
+      "party_context_key": "venstre",
+      "group_short": "V",
+      "group_name": "Venstre, Danmarks Liberale Parti",
+      "source_year": 2025,
+      "source": "Folketinget OData (oda.ft.dk)"
+    },
+    "Lars Løkke Rasmussen": {
+      "party_context_key": "moderaterne",
+      "group_short": "M",
+      "group_name": "Moderaterne",
+      "source_year": 2025,
+      "source": "Folketinget OData (oda.ft.dk)"
+    },
+    "Lars-Christian Brask": {
+      "party_context_key": "liberalalliance",
+      "group_short": "LA",
+      "group_name": "Liberal Alliance",
+      "source_year": 2025,
+      "source": "Folketinget OData (oda.ft.dk)"
+    },
+    "Lasse Haugaard Pedersen": {
+      "party_context_key": "socialdemokratiet",
+      "group_short": "S",
+      "group_name": "Socialdemokratiet",
+      "source_year": 2025,
+      "source": "Folketinget OData (oda.ft.dk)"
+    },
+    "Lea Wermelin": {
+      "party_context_key": "socialdemokratiet",
+      "group_short": "S",
+      "group_name": "Socialdemokratiet",
+      "source_year": 2025,
+      "source": "Folketinget OData (oda.ft.dk)"
+    },
+    "Leif Lahn Jensen": {
+      "party_context_key": "socialdemokratiet",
+      "group_short": "S",
+      "group_name": "Socialdemokratiet",
+      "source_year": 2025,
+      "source": "Folketinget OData (oda.ft.dk)"
+    },
+    "Leila Stockmarr": {
+      "party_context_key": "enhedslisten",
+      "group_short": "EL",
+      "group_name": "Enhedslisten",
+      "source_year": 2025,
+      "source": "Folketinget OData (oda.ft.dk)"
+    },
+    "Linea Søgaard-Lidell": {
+      "party_context_key": "venstre",
+      "group_short": "V",
+      "group_name": "Venstre, Danmarks Liberale Parti",
+      "source_year": 2025,
+      "source": "Folketinget OData (oda.ft.dk)"
+    },
+    "Lisa Perkins": {
+      "party_context_key": "liberalalliance",
+      "group_short": "LA",
+      "group_name": "Liberal Alliance",
+      "source_year": 2025,
+      "source": "Folketinget OData (oda.ft.dk)"
+    },
+    "Lisbeth Bech-Nielsen": {
+      "party_context_key": "sf",
+      "group_short": "SF",
+      "group_name": "Socialistisk Folkeparti",
+      "source_year": 2025,
+      "source": "Folketinget OData (oda.ft.dk)"
+    },
+    "Lise Bech": {
+      "party_context_key": "danmarksdemokraterne",
+      "group_short": "DD",
+      "group_name": "Danmarksdemokraterne – Inger Støjberg",
+      "source_year": 2025,
+      "source": "Folketinget OData (oda.ft.dk)"
+    },
+    "Lise Bertelsen": {
+      "party_context_key": "konservative",
+      "group_short": "KF",
+      "group_name": "Det Konservative Folkeparti",
+      "source_year": 2025,
+      "source": "Folketinget OData (oda.ft.dk)"
+    },
+    "Lotte Rod": {
+      "party_context_key": "radikale",
+      "group_short": "RV",
+      "group_name": "Radikale Venstre",
+      "source_year": 2025,
+      "source": "Folketinget OData (oda.ft.dk)"
+    },
+    "Louise Brown": {
+      "party_context_key": "liberalalliance",
+      "group_short": "LA",
+      "group_name": "Liberal Alliance",
+      "source_year": 2025,
+      "source": "Folketinget OData (oda.ft.dk)"
+    },
+    "Louise Elholm": {
+      "party_context_key": "venstre",
+      "group_short": "V",
+      "group_name": "Venstre, Danmarks Liberale Parti",
+      "source_year": 2025,
+      "source": "Folketinget OData (oda.ft.dk)"
+    },
+    "Louise Mehnke": {
+      "party_context_key": "socialdemokratiet",
+      "group_short": "S",
+      "group_name": "Socialdemokratiet",
+      "source_year": 2025,
+      "source": "Folketinget OData (oda.ft.dk)"
+    },
+    "Mads Fuglede": {
+      "party_context_key": "danmarksdemokraterne",
+      "group_short": "DD",
+      "group_name": "Danmarksdemokraterne – Inger Støjberg",
+      "source_year": 2025,
+      "source": "Folketinget OData (oda.ft.dk)"
+    },
+    "Mads Madsen Henriksen": {
+      "party_context_key": "socialdemokratiet",
+      "group_short": "S",
+      "group_name": "Socialdemokratiet",
+      "source_year": 2025,
+      "source": "Folketinget OData (oda.ft.dk)"
+    },
+    "Mads Olsen": {
+      "party_context_key": "sf",
+      "group_short": "SF",
+      "group_name": "Socialistisk Folkeparti",
+      "source_year": 2025,
+      "source": "Folketinget OData (oda.ft.dk)"
+    },
+    "Magnus Heunicke": {
+      "party_context_key": "socialdemokratiet",
+      "group_short": "S",
+      "group_name": "Socialdemokratiet",
+      "source_year": 2025,
+      "source": "Folketinget OData (oda.ft.dk)"
+    },
+    "Mai Mercado": {
+      "party_context_key": "konservative",
+      "group_short": "KF",
+      "group_name": "Det Konservative Folkeparti",
+      "source_year": 2025,
+      "source": "Folketinget OData (oda.ft.dk)"
+    },
+    "Mai Villadsen": {
+      "party_context_key": "enhedslisten",
+      "group_short": "EL",
+      "group_name": "Enhedslisten",
+      "source_year": 2025,
+      "source": "Folketinget OData (oda.ft.dk)"
+    },
+    "Malte Larsen": {
+      "party_context_key": "socialdemokratiet",
+      "group_short": "S",
+      "group_name": "Socialdemokratiet",
+      "source_year": 2025,
+      "source": "Folketinget OData (oda.ft.dk)"
+    },
+    "Maria Durhuus": {
+      "party_context_key": "socialdemokratiet",
+      "group_short": "S",
+      "group_name": "Socialdemokratiet",
+      "source_year": 2025,
+      "source": "Folketinget OData (oda.ft.dk)"
+    },
+    "Marianne Bigum": {
+      "party_context_key": "sf",
+      "group_short": "SF",
+      "group_name": "Socialistisk Folkeparti",
+      "source_year": 2025,
+      "source": "Folketinget OData (oda.ft.dk)"
+    },
+    "Marie Bjerre": {
+      "party_context_key": "venstre",
+      "group_short": "V",
+      "group_name": "Venstre, Danmarks Liberale Parti",
+      "source_year": 2025,
+      "source": "Folketinget OData (oda.ft.dk)"
+    },
+    "Marlene Ambo-Rasmussen": {
+      "party_context_key": "venstre",
+      "group_short": "V",
+      "group_name": "Venstre, Danmarks Liberale Parti",
+      "source_year": 2025,
+      "source": "Folketinget OData (oda.ft.dk)"
+    },
+    "Marlene Harpsøe": {
+      "party_context_key": "danmarksdemokraterne",
+      "group_short": "DD",
+      "group_name": "Danmarksdemokraterne – Inger Støjberg",
+      "source_year": 2025,
+      "source": "Folketinget OData (oda.ft.dk)"
+    },
+    "Martin Lidegaard": {
+      "party_context_key": "radikale",
+      "group_short": "RV",
+      "group_name": "Radikale Venstre",
+      "source_year": 2025,
+      "source": "Folketinget OData (oda.ft.dk)"
+    },
+    "Matilde Powers": {
+      "party_context_key": "socialdemokratiet",
+      "group_short": "S",
+      "group_name": "Socialdemokratiet",
+      "source_year": 2025,
+      "source": "Folketinget OData (oda.ft.dk)"
+    },
+    "Mattias Tesfaye": {
+      "party_context_key": "socialdemokratiet",
+      "group_short": "S",
+      "group_name": "Socialdemokratiet",
+      "source_year": 2025,
+      "source": "Folketinget OData (oda.ft.dk)"
+    },
+    "Mette Abildgaard": {
+      "party_context_key": "konservative",
+      "group_short": "KF",
+      "group_name": "Det Konservative Folkeparti",
+      "source_year": 2025,
+      "source": "Folketinget OData (oda.ft.dk)"
+    },
+    "Mette Frederiksen": {
+      "party_context_key": "socialdemokratiet",
+      "group_short": "S",
+      "group_name": "Socialdemokratiet",
+      "source_year": 2025,
+      "source": "Folketinget OData (oda.ft.dk)"
+    },
+    "Mette Kierkgaard": {
+      "party_context_key": "moderaterne",
+      "group_short": "M",
+      "group_name": "Moderaterne",
+      "source_year": 2025,
+      "source": "Folketinget OData (oda.ft.dk)"
+    },
+    "Mette Reissmann": {
+      "party_context_key": "socialdemokratiet",
+      "group_short": "S",
+      "group_name": "Socialdemokratiet",
+      "source_year": 2025,
+      "source": "Folketinget OData (oda.ft.dk)"
+    },
+    "Mette Thiesen": {
+      "party_context_key": "danskfolkeparti",
+      "group_short": "DF",
+      "group_name": "Dansk Folkeparti",
+      "source_year": 2025,
+      "source": "Folketinget OData (oda.ft.dk)"
+    },
+    "Michael Aastrup Jensen": {
+      "party_context_key": "venstre",
+      "group_short": "V",
+      "group_name": "Venstre, Danmarks Liberale Parti",
+      "source_year": 2025,
+      "source": "Folketinget OData (oda.ft.dk)"
+    },
+    "Mike Villa Fonseca": {
+      "party_context_key": null,
+      "group_short": "UFG",
+      "group_name": "Uden for folketingsgrupperne - Mike Villa Fonseca",
+      "source_year": 2025,
+      "source": "Folketinget OData (oda.ft.dk)"
+    },
+    "Mikkel Bjørn": {
+      "party_context_key": "danskfolkeparti",
+      "group_short": "DF",
+      "group_name": "Dansk Folkeparti",
+      "source_year": 2025,
+      "source": "Folketinget OData (oda.ft.dk)"
+    },
+    "Mogens Jensen": {
+      "party_context_key": "socialdemokratiet",
+      "group_short": "S",
+      "group_name": "Socialdemokratiet",
+      "source_year": 2025,
+      "source": "Folketinget OData (oda.ft.dk)"
+    },
+    "Mohammad Rona": {
+      "party_context_key": "moderaterne",
+      "group_short": "M",
+      "group_name": "Moderaterne",
+      "source_year": 2025,
+      "source": "Folketinget OData (oda.ft.dk)"
+    },
+    "Mona Juul": {
+      "party_context_key": "konservative",
+      "group_short": "KF",
+      "group_name": "Det Konservative Folkeparti",
+      "source_year": 2025,
+      "source": "Folketinget OData (oda.ft.dk)"
+    },
+    "Monika Rubin": {
+      "party_context_key": "moderaterne",
+      "group_short": "M",
+      "group_name": "Moderaterne",
+      "source_year": 2025,
+      "source": "Folketinget OData (oda.ft.dk)"
+    },
+    "Morten Bødskov": {
+      "party_context_key": "socialdemokratiet",
+      "group_short": "S",
+      "group_name": "Socialdemokratiet",
+      "source_year": 2025,
+      "source": "Folketinget OData (oda.ft.dk)"
+    },
+    "Morten Dahlin": {
+      "party_context_key": "venstre",
+      "group_short": "V",
+      "group_name": "Venstre, Danmarks Liberale Parti",
+      "source_year": 2025,
+      "source": "Folketinget OData (oda.ft.dk)"
+    },
+    "Morten Klessen": {
+      "party_context_key": "socialdemokratiet",
+      "group_short": "S",
+      "group_name": "Socialdemokratiet",
+      "source_year": 2025,
+      "source": "Folketinget OData (oda.ft.dk)"
+    },
+    "Morten Messerschmidt": {
+      "party_context_key": "danskfolkeparti",
+      "group_short": "DF",
+      "group_name": "Dansk Folkeparti",
+      "source_year": 2025,
+      "source": "Folketinget OData (oda.ft.dk)"
+    },
+    "Nanna W. Gotfredsen": {
+      "party_context_key": "moderaterne",
+      "group_short": "M",
+      "group_name": "Moderaterne",
+      "source_year": 2025,
+      "source": "Folketinget OData (oda.ft.dk)"
+    },
+    "Nick Zimmermann": {
+      "party_context_key": "danskfolkeparti",
+      "group_short": "DF",
+      "group_name": "Dansk Folkeparti",
+      "source_year": 2025,
+      "source": "Folketinget OData (oda.ft.dk)"
+    },
+    "Nicolai Wammen": {
+      "party_context_key": "socialdemokratiet",
+      "group_short": "S",
+      "group_name": "Socialdemokratiet",
+      "source_year": 2025,
+      "source": "Folketinget OData (oda.ft.dk)"
+    },
+    "Nikoline Erbs Hillers-Bendtsen": {
+      "party_context_key": "alternativet",
+      "group_short": "ALT",
+      "group_name": "Alternativet",
+      "source_year": 2025,
+      "source": "Folketinget OData (oda.ft.dk)"
+    },
+    "Ole Birk Olesen": {
+      "party_context_key": "liberalalliance",
+      "group_short": "LA",
+      "group_name": "Liberal Alliance",
+      "source_year": 2025,
+      "source": "Folketinget OData (oda.ft.dk)"
+    },
+    "Peder Hvelplund": {
+      "party_context_key": "enhedslisten",
+      "group_short": "EL",
+      "group_name": "Enhedslisten",
+      "source_year": 2025,
+      "source": "Folketinget OData (oda.ft.dk)"
+    },
+    "Pelle Dragsted": {
+      "party_context_key": "enhedslisten",
+      "group_short": "EL",
+      "group_name": "Enhedslisten",
+      "source_year": 2025,
+      "source": "Folketinget OData (oda.ft.dk)"
+    },
+    "Per Husted": {
+      "party_context_key": "socialdemokratiet",
+      "group_short": "S",
+      "group_name": "Socialdemokratiet",
+      "source_year": 2025,
+      "source": "Folketinget OData (oda.ft.dk)"
+    },
+    "Per Larsen": {
+      "party_context_key": "konservative",
+      "group_short": "KF",
+      "group_name": "Det Konservative Folkeparti",
+      "source_year": 2025,
+      "source": "Folketinget OData (oda.ft.dk)"
+    },
+    "Pernille Rosenkrantz-Theil": {
+      "party_context_key": "socialdemokratiet",
+      "group_short": "S",
+      "group_name": "Socialdemokratiet",
+      "source_year": 2025,
+      "source": "Folketinget OData (oda.ft.dk)"
+    },
+    "Pernille Vermund": {
+      "party_context_key": "liberalalliance",
+      "group_short": "LA",
+      "group_name": "Liberal Alliance",
+      "source_year": 2025,
+      "source": "Folketinget OData (oda.ft.dk)"
+    },
+    "Peter Have": {
+      "party_context_key": "moderaterne",
+      "group_short": "M",
+      "group_name": "Moderaterne",
+      "source_year": 2025,
+      "source": "Folketinget OData (oda.ft.dk)"
+    },
+    "Peter Hummelgaard": {
+      "party_context_key": "socialdemokratiet",
+      "group_short": "S",
+      "group_name": "Socialdemokratiet",
+      "source_year": 2025,
+      "source": "Folketinget OData (oda.ft.dk)"
+    },
+    "Peter Juel-Jensen": {
+      "party_context_key": "venstre",
+      "group_short": "V",
+      "group_name": "Venstre, Danmarks Liberale Parti",
+      "source_year": 2025,
+      "source": "Folketinget OData (oda.ft.dk)"
+    },
+    "Peter Kofod": {
+      "party_context_key": "danskfolkeparti",
+      "group_short": "DF",
+      "group_name": "Dansk Folkeparti",
+      "source_year": 2025,
+      "source": "Folketinget OData (oda.ft.dk)"
+    },
+    "Peter Seier Christensen": {
+      "party_context_key": null,
+      "group_short": "UFG",
+      "group_name": "Uden for folketingsgrupperne - Peter Seier Christensen",
+      "source_year": 2025,
+      "source": "Folketinget OData (oda.ft.dk)"
+    },
+    "Peter Skaarup": {
+      "party_context_key": "danmarksdemokraterne",
+      "group_short": "DD",
+      "group_name": "Danmarksdemokraterne – Inger Støjberg",
+      "source_year": 2025,
+      "source": "Folketinget OData (oda.ft.dk)"
+    },
+    "Pia Kjærsgaard": {
+      "party_context_key": "danskfolkeparti",
+      "group_short": "DF",
+      "group_name": "Dansk Folkeparti",
+      "source_year": 2025,
+      "source": "Folketinget OData (oda.ft.dk)"
+    },
+    "Pia Olsen Dyhr": {
+      "party_context_key": "sf",
+      "group_short": "SF",
+      "group_name": "Socialistisk Folkeparti",
+      "source_year": 2025,
+      "source": "Folketinget OData (oda.ft.dk)"
+    },
+    "Preben Bang Henriksen": {
+      "party_context_key": "venstre",
+      "group_short": "V",
+      "group_name": "Venstre, Danmarks Liberale Parti",
+      "source_year": 2025,
+      "source": "Folketinget OData (oda.ft.dk)"
+    },
+    "Rasmus Horn Langhoff": {
+      "party_context_key": "socialdemokratiet",
+      "group_short": "S",
+      "group_name": "Socialdemokratiet",
+      "source_year": 2025,
+      "source": "Folketinget OData (oda.ft.dk)"
+    },
+    "Rasmus Jarlov": {
+      "party_context_key": "konservative",
+      "group_short": "KF",
+      "group_name": "Det Konservative Folkeparti",
+      "source_year": 2025,
+      "source": "Folketinget OData (oda.ft.dk)"
+    },
+    "Rasmus Lund-Nielsen": {
+      "party_context_key": "moderaterne",
+      "group_short": "M",
+      "group_name": "Moderaterne",
+      "source_year": 2025,
+      "source": "Folketinget OData (oda.ft.dk)"
+    },
+    "Rasmus Prehn": {
+      "party_context_key": "socialdemokratiet",
+      "group_short": "S",
+      "group_name": "Socialdemokratiet",
+      "source_year": 2025,
+      "source": "Folketinget OData (oda.ft.dk)"
+    },
+    "Rasmus Stoklund": {
+      "party_context_key": "socialdemokratiet",
+      "group_short": "S",
+      "group_name": "Socialdemokratiet",
+      "source_year": 2025,
+      "source": "Folketinget OData (oda.ft.dk)"
+    },
+    "Rosa Eriksen": {
+      "party_context_key": "moderaterne",
+      "group_short": "M",
+      "group_name": "Moderaterne",
+      "source_year": 2025,
+      "source": "Folketinget OData (oda.ft.dk)"
+    },
+    "Rosa Lund": {
+      "party_context_key": "enhedslisten",
+      "group_short": "EL",
+      "group_name": "Enhedslisten",
+      "source_year": 2025,
+      "source": "Folketinget OData (oda.ft.dk)"
+    },
+    "Samira Nawa": {
+      "party_context_key": "radikale",
+      "group_short": "RV",
+      "group_name": "Radikale Venstre",
+      "source_year": 2025,
+      "source": "Folketinget OData (oda.ft.dk)"
+    },
+    "Sandra Elisabeth Skalvig": {
+      "party_context_key": "liberalalliance",
+      "group_short": "LA",
+      "group_name": "Liberal Alliance",
+      "source_year": 2025,
+      "source": "Folketinget OData (oda.ft.dk)"
+    },
+    "Sara Emil Baaring": {
+      "party_context_key": "socialdemokratiet",
+      "group_short": "S",
+      "group_name": "Socialdemokratiet",
+      "source_year": 2025,
+      "source": "Folketinget OData (oda.ft.dk)"
+    },
+    "Sascha Faxe": {
+      "party_context_key": "alternativet",
+      "group_short": "ALT",
+      "group_name": "Alternativet",
+      "source_year": 2025,
+      "source": "Folketinget OData (oda.ft.dk)"
+    },
+    "Signe Munk": {
+      "party_context_key": "sf",
+      "group_short": "SF",
+      "group_name": "Socialistisk Folkeparti",
+      "source_year": 2025,
+      "source": "Folketinget OData (oda.ft.dk)"
+    },
+    "Sigurd Agersnap": {
+      "party_context_key": "sf",
+      "group_short": "SF",
+      "group_name": "Socialistisk Folkeparti",
+      "source_year": 2025,
+      "source": "Folketinget OData (oda.ft.dk)"
+    },
+    "Simon Kollerup": {
+      "party_context_key": "socialdemokratiet",
+      "group_short": "S",
+      "group_name": "Socialdemokratiet",
+      "source_year": 2025,
+      "source": "Folketinget OData (oda.ft.dk)"
+    },
+    "Sjúrður Skaale": {
+      "party_context_key": null,
+      "group_short": "JF",
+      "group_name": "Javnaðarflokkurin",
+      "source_year": 2025,
+      "source": "Folketinget OData (oda.ft.dk)"
+    },
+    "Sofie Lippert": {
+      "party_context_key": "sf",
+      "group_short": "SF",
+      "group_name": "Socialistisk Folkeparti",
+      "source_year": 2025,
+      "source": "Folketinget OData (oda.ft.dk)"
+    },
+    "Sophie Løhde": {
+      "party_context_key": "venstre",
+      "group_short": "V",
+      "group_name": "Venstre, Danmarks Liberale Parti",
+      "source_year": 2025,
+      "source": "Folketinget OData (oda.ft.dk)"
+    },
+    "Steffen Larsen": {
+      "party_context_key": "liberalalliance",
+      "group_short": "LA",
+      "group_name": "Liberal Alliance",
+      "source_year": 2025,
+      "source": "Folketinget OData (oda.ft.dk)"
+    },
+    "Steffen W. Frølund": {
+      "party_context_key": "liberalalliance",
+      "group_short": "LA",
+      "group_name": "Liberal Alliance",
+      "source_year": 2025,
+      "source": "Folketinget OData (oda.ft.dk)"
+    },
+    "Stinus Lindgreen": {
+      "party_context_key": "radikale",
+      "group_short": "RV",
+      "group_name": "Radikale Venstre",
+      "source_year": 2025,
+      "source": "Folketinget OData (oda.ft.dk)"
+    },
+    "Susie Jessen": {
+      "party_context_key": "danmarksdemokraterne",
+      "group_short": "DD",
+      "group_name": "Danmarksdemokraterne – Inger Støjberg",
+      "source_year": 2025,
+      "source": "Folketinget OData (oda.ft.dk)"
+    },
+    "Sólbjørg Jakobsen": {
+      "party_context_key": "liberalalliance",
+      "group_short": "LA",
+      "group_name": "Liberal Alliance",
+      "source_year": 2025,
+      "source": "Folketinget OData (oda.ft.dk)"
+    },
+    "Søren Egge Rasmussen": {
+      "party_context_key": "enhedslisten",
+      "group_short": "EL",
+      "group_name": "Enhedslisten",
+      "source_year": 2025,
+      "source": "Folketinget OData (oda.ft.dk)"
+    },
+    "Søren Espersen": {
+      "party_context_key": "danmarksdemokraterne",
+      "group_short": "DD",
+      "group_name": "Danmarksdemokraterne – Inger Støjberg",
+      "source_year": 2025,
+      "source": "Folketinget OData (oda.ft.dk)"
+    },
+    "Søren Gade": {
+      "party_context_key": "venstre",
+      "group_short": "V",
+      "group_name": "Venstre, Danmarks Liberale Parti",
+      "source_year": 2025,
+      "source": "Folketinget OData (oda.ft.dk)"
+    },
+    "Søren Søndergaard": {
+      "party_context_key": "enhedslisten",
+      "group_short": "EL",
+      "group_name": "Enhedslisten",
+      "source_year": 2025,
+      "source": "Folketinget OData (oda.ft.dk)"
+    },
+    "Tanja Larsson": {
+      "party_context_key": "socialdemokratiet",
+      "group_short": "S",
+      "group_name": "Socialdemokratiet",
+      "source_year": 2025,
+      "source": "Folketinget OData (oda.ft.dk)"
+    },
+    "Theresa Berg Andersen": {
+      "party_context_key": "sf",
+      "group_short": "SF",
+      "group_name": "Socialistisk Folkeparti",
+      "source_year": 2025,
+      "source": "Folketinget OData (oda.ft.dk)"
+    },
+    "Theresa Scavenius": {
+      "party_context_key": null,
+      "group_short": "UFG",
+      "group_name": "Uden for folketingsgrupperne - Theresa Scavenius",
+      "source_year": 2025,
+      "source": "Folketinget OData (oda.ft.dk)"
+    },
+    "Thomas Danielsen": {
+      "party_context_key": "venstre",
+      "group_short": "V",
+      "group_name": "Venstre, Danmarks Liberale Parti",
+      "source_year": 2025,
+      "source": "Folketinget OData (oda.ft.dk)"
+    },
+    "Thomas Jensen": {
+      "party_context_key": "socialdemokratiet",
+      "group_short": "S",
+      "group_name": "Socialdemokratiet",
+      "source_year": 2025,
+      "source": "Folketinget OData (oda.ft.dk)"
+    },
+    "Thomas Monberg": {
+      "party_context_key": "socialdemokratiet",
+      "group_short": "S",
+      "group_name": "Socialdemokratiet",
+      "source_year": 2025,
+      "source": "Folketinget OData (oda.ft.dk)"
+    },
+    "Thomas Skriver Jensen": {
+      "party_context_key": "socialdemokratiet",
+      "group_short": "S",
+      "group_name": "Socialdemokratiet",
+      "source_year": 2025,
+      "source": "Folketinget OData (oda.ft.dk)"
+    },
+    "Thorkild Holmboe-Hay": {
+      "party_context_key": "socialdemokratiet",
+      "group_short": "S",
+      "group_name": "Socialdemokratiet",
+      "source_year": 2025,
+      "source": "Folketinget OData (oda.ft.dk)"
+    },
+    "Tina Cartey Hansen": {
+      "party_context_key": "konservative",
+      "group_short": "KF",
+      "group_name": "Det Konservative Folkeparti",
+      "source_year": 2025,
+      "source": "Folketinget OData (oda.ft.dk)"
+    },
+    "Torsten Gejl": {
+      "party_context_key": "alternativet",
+      "group_short": "ALT",
+      "group_name": "Alternativet",
+      "source_year": 2025,
+      "source": "Folketinget OData (oda.ft.dk)"
+    },
+    "Torsten Schack Pedersen": {
+      "party_context_key": "venstre",
+      "group_short": "V",
+      "group_name": "Venstre, Danmarks Liberale Parti",
+      "source_year": 2025,
+      "source": "Folketinget OData (oda.ft.dk)"
+    },
+    "Trine Bramsen": {
+      "party_context_key": "socialdemokratiet",
+      "group_short": "S",
+      "group_name": "Socialdemokratiet",
+      "source_year": 2025,
+      "source": "Folketinget OData (oda.ft.dk)"
+    },
+    "Trine Pertou Mach": {
+      "party_context_key": "enhedslisten",
+      "group_short": "EL",
+      "group_name": "Enhedslisten",
+      "source_year": 2025,
+      "source": "Folketinget OData (oda.ft.dk)"
+    },
+    "Troels Lund Poulsen": {
+      "party_context_key": "venstre",
+      "group_short": "V",
+      "group_name": "Venstre, Danmarks Liberale Parti",
+      "source_year": 2025,
+      "source": "Folketinget OData (oda.ft.dk)"
+    },
+    "Victoria Velasquez": {
+      "party_context_key": "enhedslisten",
+      "group_short": "EL",
+      "group_name": "Enhedslisten",
+      "source_year": 2025,
+      "source": "Folketinget OData (oda.ft.dk)"
+    },
+    "Yildiz Akdogan": {
+      "party_context_key": "socialdemokratiet",
+      "group_short": "S",
+      "group_name": "Socialdemokratiet",
+      "source_year": 2025,
+      "source": "Folketinget OData (oda.ft.dk)"
+    },
+    "Zenia Stampe": {
+      "party_context_key": "radikale",
+      "group_short": "RV",
+      "group_name": "Radikale Venstre",
+      "source_year": 2025,
+      "source": "Folketinget OData (oda.ft.dk)"
+    }
+  }
+}

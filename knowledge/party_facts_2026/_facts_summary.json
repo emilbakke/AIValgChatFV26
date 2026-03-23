@@ -1,0 +1,80 @@
+{
+  "generated_at": "2026-03-03T00:00:00+00:00",
+  "written": 12,
+  "missing_wiki_url": [],
+  "failed_fetch": [],
+  "per_party": {
+    "alternativet": {
+      "party_name": "Alternativet",
+      "source_url": "https://da.wikipedia.org/wiki/Alternativet",
+      "fields_found": 17,
+      "out_file": "knowledge/party_facts_2026/alternativet/000_fakta_2026.md"
+    },
+    "borgernesparti": {
+      "party_name": "Borgernes Parti",
+      "source_url": "https://da.wikipedia.org/wiki/Borgernes_Parti",
+      "fields_found": 9,
+      "out_file": "knowledge/party_facts_2026/borgernesparti/000_fakta_2026.md"
+    },
+    "danmarksdemokraterne": {
+      "party_name": "Danmarksdemokraterne",
+      "source_url": "https://da.wikipedia.org/wiki/Danmarksdemokraterne",
+      "fields_found": 17,
+      "out_file": "knowledge/party_facts_2026/danmarksdemokraterne/000_fakta_2026.md"
+    },
+    "danskfolkeparti": {
+      "party_name": "Dansk Folkeparti",
+      "source_url": "https://da.wikipedia.org/wiki/Dansk_Folkeparti",
+      "fields_found": 17,
+      "out_file": "knowledge/party_facts_2026/danskfolkeparti/000_fakta_2026.md"
+    },
+    "enhedslisten": {
+      "party_name": "Enhedslisten",
+      "source_url": "https://da.wikipedia.org/wiki/Enhedslisten",
+      "fields_found": 21,
+      "out_file": "knowledge/party_facts_2026/enhedslisten/000_fakta_2026.md"
+    },
+    "konservative": {
+      "party_name": "Konservative",
+      "source_url": "https://da.wikipedia.org/wiki/Det_Konservative_Folkeparti",
+      "fields_found": 24,
+      "out_file": "knowledge/party_facts_2026/konservative/000_fakta_2026.md"
+    },
+    "liberalalliance": {
+      "party_name": "Liberal Alliance",
+      "source_url": "https://da.wikipedia.org/wiki/Liberal_Alliance",
+      "fields_found": 17,
+      "out_file": "knowledge/party_facts_2026/liberalalliance/000_fakta_2026.md"
+    },
+    "moderaterne": {
+      "party_name": "Moderaterne",
+      "source_url": "https://da.wikipedia.org/wiki/Moderaterne_(dansk_parti)",
+      "fields_found": 17,
+      "out_file": "knowledge/party_facts_2026/moderaterne/000_fakta_2026.md"
+    },
+    "radikale": {
+      "party_name": "Radikale Venstre",
+      "source_url": "https://da.wikipedia.org/wiki/Radikale_Venstre",
+      "fields_found": 21,
+      "out_file": "knowledge/party_facts_2026/radikale/000_fakta_2026.md"
+    },
+    "sf": {
+      "party_name": "SF",
+      "source_url": "https://da.wikipedia.org/wiki/Socialistisk_Folkeparti",
+      "fields_found": 24,
+      "out_file": "knowledge/party_facts_2026/sf/000_fakta_2026.md"
+    },
+    "socialdemokratiet": {
+      "party_name": "Socialdemokratiet",
+      "source_url": "https://da.wikipedia.org/wiki/Socialdemokratiet",
+      "fields_found": 24,
+      "out_file": "knowledge/party_facts_2026/socialdemokratiet/000_fakta_2026.md"
+    },
+    "venstre": {
+      "party_name": "Venstre",
+      "source_url": "https://da.wikipedia.org/wiki/Venstre",
+      "fields_found": 23,
+      "out_file": "knowledge/party_facts_2026/venstre/000_fakta_2026.md"
+    }
+  }
+}
