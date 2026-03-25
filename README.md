@@ -50,6 +50,11 @@ Provide your own values for:
 - `WEBUI_API_KEY`
 - `PUBLIC_BASE_URL`
 - real collection UUIDs in `knowledge_ids`
+- optionally `ENABLE_RESEARCH_LOGGING=false` to stop writes to `logs.jsonl`
+- optionally `ENABLE_METRICS_LOGGING=false` to stop writes to `metrics.jsonl`
+- optionally use runtime flag files:
+  - `.disable_research_logging`
+  - `.disable_metrics_logging`
 
 Example:
 

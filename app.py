@@ -492,6 +492,20 @@ def create_app() -> Flask:
     # Logging
     app.config["LOG_FILE"] = os.environ.get("LOG_FILE", "logs.jsonl")
     app.config["METRICS_LOG_FILE"] = os.environ.get("METRICS_LOG_FILE", "metrics.jsonl")
+    app.config["ENABLE_RESEARCH_LOGGING"] = (
+        os.environ.get("ENABLE_RESEARCH_LOGGING", "true").strip().lower() in ("1", "true", "yes", "y", "on")
+    )
+    app.config["ENABLE_METRICS_LOGGING"] = (
+        os.environ.get("ENABLE_METRICS_LOGGING", "true").strip().lower() in ("1", "true", "yes", "y", "on")
+    )
+    app.config["RESEARCH_LOGGING_FLAG_FILE"] = os.environ.get(
+        "RESEARCH_LOGGING_FLAG_FILE",
+        ".disable_research_logging",
+    )
+    app.config["METRICS_LOGGING_FLAG_FILE"] = os.environ.get(
+        "METRICS_LOGGING_FLAG_FILE",
+        ".disable_metrics_logging",
+    )
     app.config["ADMIN_METRICS_TOKEN"] = (
         os.environ.get("ADMIN_METRICS_TOKEN", "").strip() or app.config["WEBUI_API_KEY"]
     )
@@ -600,6 +614,22 @@ def create_app() -> Flask:
     }
     inflight_peak = 0
 
+    def _research_logging_enabled() -> bool:
+        if not app.config.get("ENABLE_RESEARCH_LOGGING", True):
+            return False
+        flag_path = (app.config.get("RESEARCH_LOGGING_FLAG_FILE", "") or "").strip()
+        if flag_path and Path(flag_path).exists():
+            return False
+        return True
+
+    def _metrics_logging_enabled() -> bool:
+        if not app.config.get("ENABLE_METRICS_LOGGING", True):
+            return False
+        flag_path = (app.config.get("METRICS_LOGGING_FLAG_FILE", "") or "").strip()
+        if flag_path and Path(flag_path).exists():
+            return False
+        return True
+
     def _new_session_id() -> str:
         # One ID per chat conversation (used in memory + logs)
         return uuid.uuid4().hex
@@ -687,12 +717,13 @@ def create_app() -> Flask:
             "response_links": response_links[:10],
             "feedback": "none",
         }
-        try:
-            with log_file_lock:
-                with open(app.config["LOG_FILE"], "a", encoding="utf-8") as f:
-                    f.write(json.dumps(entry, ensure_ascii=False) + "\n")
-        except Exception as e:
-            print(f"Warning: could not write log entry: {e}")
+        if _research_logging_enabled():
+            try:
+                with log_file_lock:
+                    with open(app.config["LOG_FILE"], "a", encoding="utf-8") as f:
+                        f.write(json.dumps(entry, ensure_ascii=False) + "\n")
+            except Exception as e:
+                print(f"Warning: could not write log entry: {e}")
         endpoint = request.path if has_request_context() else "unknown"
         _record_request_metric(
             endpoint=endpoint,
@@ -716,6 +747,8 @@ def create_app() -> Flask:
             "event_type": event_type,
             "event_payload": payload or {},
         }
+        if not _research_logging_enabled():
+            return
         try:
             with log_file_lock:
                 with open(app.config["LOG_FILE"], "a", encoding="utf-8") as f:
@@ -724,6 +757,8 @@ def create_app() -> Flask:
             print(f"Warning: could not write session event: {e}")
 
     def _append_metrics_log(entry: dict) -> None:
+        if not _metrics_logging_enabled():
+            return
         try:
             with metrics_file_lock:
                 with open(app.config["METRICS_LOG_FILE"], "a", encoding="utf-8") as f:
@@ -1000,6 +1035,8 @@ def create_app() -> Flask:
         Update latest matching interaction line in logs.jsonl with feedback=up/down.
         Matching key: session_id + prompt + response.
         """
+        if not _research_logging_enabled():
+            return False
         log_path = Path(app.config["LOG_FILE"])
         if not log_path.exists():
             return False
@@ -1117,7 +1154,7 @@ def create_app() -> Flask:
         deleted_log_rows = 0
         deletion_code = session_deletion_codes.get(sess_id, "")
         log_path = Path(app.config["LOG_FILE"])
-        if log_path.exists():
+        if _research_logging_enabled() and log_path.exists():
             try:
                 with log_file_lock:
                     lines = log_path.read_text(encoding="utf-8").splitlines()
@@ -3710,6 +3747,7 @@ def create_app() -> Flask:
                 "index.html",
                 public_page_url=_public_url("/"),
                 social_preview_url=_public_url("/social-preview.png"),
+                research_logging_enabled=_research_logging_enabled(),
             )
         )
         resp.set_cookie(
@@ -4324,7 +4362,7 @@ def create_app() -> Flask:
         if not isinstance(payload, dict):
             return jsonify({"error": "payload must be an object."}), 400
         session_id = request.cookies.get("session_id") or _new_session_id()
-        if event_type == "briefing_ack":
+        if event_type == "briefing_ack" and _research_logging_enabled():
             code = _get_or_create_deletion_code(session_id)
             payload = dict(payload)
             payload["deletion_code"] = code

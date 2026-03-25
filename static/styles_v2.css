@@ -107,6 +107,20 @@ header h1 {
   font-weight: 650;
 }
 
+.logging-disabled-badge {
+  margin: 10px auto 0 auto;
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  padding: 6px 12px;
+  border-radius: 999px;
+  border: 1px solid #bfdbfe;
+  background: #eff6ff;
+  color: #1d4ed8;
+  font-size: 0.82rem;
+  font-weight: 700;
+}
+
 .header-actions {
   position: absolute;
   top: 12px;
@@ -386,6 +400,12 @@ form button:disabled {
   padding: 8px 10px;
 }
 
+.prompt-warning-neutral {
+  color: #1d4ed8;
+  background: #eff6ff;
+  border-color: #bfdbfe;
+}
+
 .prompt-deletion-code {
   margin: 0;
   font-size: 0.7rem;
@@ -588,6 +608,16 @@ form button:disabled {
   border: 1px solid #e5e7eb;
   border-radius: 10px;
   padding: 8px 10px;
+}
+
+.deletion-code-note-neutral {
+  background: #eff6ff;
+  border-color: #bfdbfe;
+  color: #1e3a8a;
+}
+
+.logging-disabled-note {
+  color: #1e40af;
 }
 
 .deletion-code-actions {
