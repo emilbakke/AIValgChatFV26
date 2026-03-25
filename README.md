@@ -70,3 +70,79 @@ Or:
 ```bash
 bash start.sh
 ```
+
+## Logging controls
+
+The app has two separate logging channels:
+
+- `logs.jsonl`: research log with prompts, responses, feedback, and session events
+- `metrics.jsonl`: operational log used for monitoring and lightweight service metrics
+
+This makes it possible to keep the app online while selectively disabling new data collection.
+
+### Environment-variable controls
+
+You can control logging at process start with:
+
+- `ENABLE_RESEARCH_LOGGING=true|false`
+- `ENABLE_METRICS_LOGGING=true|false`
+
+Examples:
+
+Keep the app live, but stop writing new research data:
+
+```bash
+ENABLE_RESEARCH_LOGGING=false ENABLE_METRICS_LOGGING=true bash start.sh
+```
+
+Stop all new on-disk logging:
+
+```bash
+ENABLE_RESEARCH_LOGGING=false ENABLE_METRICS_LOGGING=false bash start.sh
+```
+
+### Runtime flag-file controls
+
+The app also supports runtime file-based toggles. By default it checks for:
+
+- `.disable_research_logging`
+- `.disable_metrics_logging`
+
+If these files exist in the app directory, new writes are skipped.
+
+Examples:
+
+Stop new research logging while the app is already running:
+
+```bash
+touch .disable_research_logging
+```
+
+Resume research logging:
+
+```bash
+rm .disable_research_logging
+```
+
+Stop new metrics logging:
+
+```bash
+touch .disable_metrics_logging
+```
+
+Resume metrics logging:
+
+```bash
+rm .disable_metrics_logging
+```
+
+### UI behaviour when research logging is disabled
+
+If research logging is disabled, the frontend switches to a non-logging state:
+
+- it shows a visible notice that research logging is off
+- consent/logging warnings are replaced with non-logging wording
+- new chats do not receive deletion codes
+- the withdraw/delete action is hidden for newly started chats
+
+Existing log files are not modified by these toggles. They only affect new writes.
