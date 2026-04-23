@@ -4,6 +4,10 @@ This directory is a public code release of the live `AI ValgChat FV26` applicati
 
 The goal is to keep the runtime app as close as possible to the deployed version while leaving out materials that should not be published in a public repository.
 
+## System architecture
+
+![AI ValgChat FV26 system architecture](docs/figures/ai_valgchat_system_architecture_compact_titles_hires.png)
+
 ## What is included
 
 - `app.py`: main Flask application
